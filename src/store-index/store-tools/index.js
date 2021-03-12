@@ -1,1 +1,1 @@
-export { default } from './store-tools';
+export { default as StoreTools } from './store-tools';
