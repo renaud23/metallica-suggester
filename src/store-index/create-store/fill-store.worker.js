@@ -4,9 +4,9 @@ import fillStore from './fill-store';
 
 self.onmessage = async function (e) {
 	const { name, fields, entities, version } = e.data;
-	const status = await fillStore(name, fields, entities, version);
+	await fillStore(name, fields, entities, version);
 
-	self.postMessage(status);
+	self.postMessage('success');
 };
 
 function empty() {}

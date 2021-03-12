@@ -19,7 +19,6 @@ async function fill(
 	const prepared = Object.entries(index).map(function ([id, suggestions]) {
 		return { suggestions, id };
 	});
-	console.log(prepared);
 	try {
 		const db = await openStorage(name, version);
 		await clearDb(db);

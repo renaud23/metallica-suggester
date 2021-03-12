@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StoreTools, fillStore } from '../store-index';
+import React, { useEffect, useState } from 'react';
+import { StoreTools } from '../store-index';
 
 const NAF_FIELDS = [
 	{ name: 'libelle', rules: [/[\w]+/], language: 'French', min: 3 },
@@ -11,16 +11,25 @@ async function fetchNaf() {
 	return fetch('/naf-rev2.json').then((response) => response.json());
 }
 
-async function createNafStore() {
-	const naf = await fetchNaf();
-	await fillStore(STORE_NAME, NAF_FIELDS, Object.values(naf));
-}
-
 export function CreateFillStore() {
+	const [entities, setEntities] = useState(undefined);
 	useEffect(function () {
-		createNafStore();
+		async function init() {
+			const naf = await fetchNaf();
+			setEntities(Object.values(naf));
+		}
+		init();
 	}, []);
-	return <StoreTools />;
+
+	return (
+		<>
+			<StoreTools
+				entities={entities}
+				fields={NAF_FIELDS}
+				storeName={STORE_NAME}
+			/>
+		</>
+	);
 }
 
 const story = {

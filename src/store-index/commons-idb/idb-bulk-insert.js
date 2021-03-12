@@ -33,7 +33,11 @@ function split(entities, limit = BULK_LIMIT) {
 }
 
 /* */
-const bulkPush = (db, name, hook) => (lot, i = 0, treated = 0) => {
+const bulkPush = (db, name, hook, resolve, reject) => (
+	lot,
+	i = 0,
+	treated = 0
+) => {
 	const [first, ...rest] = lot;
 
 	try {
@@ -49,16 +53,19 @@ const bulkPush = (db, name, hook) => (lot, i = 0, treated = 0) => {
 					treated: nextTreated,
 					step: i,
 				});
-				bulkPush(db, name, hook)(rest, i + 1, nextTreated);
+				bulkPush(db, name, hook, resolve, reject)(rest, i + 1, nextTreated);
 			};
 			transaction.onerror = function (e) {
 				hook({ message: BULK_INSERT_MESSAGES.error, error: e });
+				reject('fail');
 			};
 		} else {
 			hook({ message: BULK_INSERT_MESSAGES.finished });
+			resolve('success');
 		}
 	} catch (e) {
 		hook({ message: BULK_INSERT_MESSAGES.error, error: e });
+		reject('fail');
 	}
 };
 
@@ -68,7 +75,7 @@ function bulkInsert(db, store, hook = () => null) {
 		const lots = split(entities, BULK_LIMIT);
 		return new Promise((resolve, reject) => {
 			try {
-				bulkPush(db, store, hook)(lots);
+				bulkPush(db, store, hook, resolve, reject)(lots);
 			} catch (e) {
 				reject(e);
 			}
