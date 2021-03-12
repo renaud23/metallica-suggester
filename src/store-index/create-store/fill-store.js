@@ -1,7 +1,18 @@
 import createIndex from './create-index';
-import { openStorage, idbBulkInsert, CONSTANTES, clearDb } from './commons-idb';
+import {
+	openStorage,
+	idbBulkInsert,
+	CONSTANTES,
+	clearDb,
+} from '../commons-idb';
 
-async function fill(name, fields, entities, log = (args) => console.log(args)) {
+async function fill(
+	name,
+	fields,
+	entities,
+	log = (args) => console.log(args),
+	version = 1
+) {
 	log({ message: 'fill-store/start' });
 	const index = await createIndex(fields, entities);
 	log({ message: 'fill-store/index-ready-to-store' });
@@ -9,7 +20,7 @@ async function fill(name, fields, entities, log = (args) => console.log(args)) {
 		return { ...entity, id };
 	});
 	try {
-		const db = await openStorage(name);
+		const db = await openStorage(name, version);
 		await clearDb(db);
 		log({ message: 'fill-store/clear-store' });
 		await idbBulkInsert(db, CONSTANTES.STORE_NAME, function (args) {

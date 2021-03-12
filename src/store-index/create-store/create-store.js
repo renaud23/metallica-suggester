@@ -1,4 +1,4 @@
-import { openStorage } from './commons-idb';
+import { openStorage } from '../commons-idb';
 
 export const ID_STORE_IDENTIFIER = 'idb-store/store-index';
 
