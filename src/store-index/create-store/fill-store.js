@@ -16,9 +16,10 @@ async function fill(
 	log({ message: 'fill-store/start' });
 	const index = await createIndex(fields, entities);
 	log({ message: 'fill-store/index-ready-to-store' });
-	const prepared = Object.entries(index).map(function ([id, entity]) {
-		return { ...entity, id };
+	const prepared = Object.entries(index).map(function ([id, suggestions]) {
+		return { suggestions, id };
 	});
+	console.log(prepared);
 	try {
 		const db = await openStorage(name, version);
 		await clearDb(db);
