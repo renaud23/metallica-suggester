@@ -1,7 +1,41 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { fillStore } from '../create-store';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import { fillStore, CREATE_STORE_MESSAGES } from '../create-store';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
+import Box from '@material-ui/core/Box';
+
+function Progress({ display, value = 0 }) {
+	if (display) {
+		return (
+			<Box position="relative" display="inline-flex">
+				<CircularProgress
+					variant="determinate"
+					value={value}
+					color="secondary"
+				/>
+				<Box
+					top={0}
+					left={0}
+					bottom={0}
+					right={0}
+					position="absolute"
+					display="flex"
+					alignItems="center"
+					justifyContent="center"
+				>
+					<Typography
+						variant="caption"
+						component="div"
+						color="textSecondary"
+					>{`${Math.round(value)}%`}</Typography>
+				</Box>
+			</Box>
+		);
+	}
+	return null;
+}
 
 async function createStore(storeName, fields, entities, log) {
 	await fillStore(storeName, fields, entities, log);
@@ -9,6 +43,8 @@ async function createStore(storeName, fields, entities, log) {
 
 function StoreTools({ entities, storeName, fields }) {
 	const [disabled, setDisabled] = useState(true);
+	const [display, setDisplay] = useState(false);
+	const [progress, setProgress] = useState(0);
 
 	useEffect(
 		function () {
@@ -20,7 +56,22 @@ function StoreTools({ entities, storeName, fields }) {
 	);
 
 	const follow = useCallback(function (args) {
-		console.log(args);
+		const { message, percent } = args;
+		const { type } = message;
+		switch (type) {
+			case CREATE_STORE_MESSAGES.start.type:
+				setDisplay(true);
+				setProgress(0);
+				break;
+			case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
+				setProgress(percent);
+				break;
+			case CREATE_STORE_MESSAGES.done.type:
+				// setDisplay(false);
+				// setProgress(0);
+				break;
+			default:
+		}
 	}, []);
 
 	const load = useCallback(
@@ -40,6 +91,7 @@ function StoreTools({ entities, storeName, fields }) {
 			<Fab disabled={disabled} color="primary" aria-label="add" onClick={load}>
 				<Loop />
 			</Fab>
+			<Progress display={display} value={progress} />
 		</div>
 	);
 }

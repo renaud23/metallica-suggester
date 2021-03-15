@@ -1,9 +1,9 @@
 const BULK_LIMIT = 300;
 
 export const BULK_INSERT_MESSAGES = {
-	complete: 'bulk-insert/complete',
-	finished: 'bulk-insert/finished',
-	error: 'bulk-insert/error',
+	bulkInsertComplete: { type: 'bulk-insert/complete' },
+	bulkInsertFinished: { type: 'bulk-insert/finished' },
+	bulkInsertError: { type: 'bulk-insert/error' },
 };
 
 /* */
@@ -33,7 +33,7 @@ function split(entities, limit = BULK_LIMIT) {
 }
 
 /* */
-const bulkPush = (db, name, hook, resolve, reject) => (
+const bulkPush = (db, name, hook, resolve, reject, max) => (
 	lot,
 	i = 0,
 	treated = 0
@@ -48,23 +48,32 @@ const bulkPush = (db, name, hook, resolve, reject) => (
 			transaction.oncomplete = function () {
 				const nextTreated = treated + first.length;
 				hook({
-					message: BULK_INSERT_MESSAGES.complete,
+					message: BULK_INSERT_MESSAGES.bulkInsertComplete,
 					nb: first.length,
 					treated: nextTreated,
 					step: i,
+					max,
+					percent: Math.round((nextTreated / max) * 100),
 				});
-				bulkPush(db, name, hook, resolve, reject)(rest, i + 1, nextTreated);
+				bulkPush(
+					db,
+					name,
+					hook,
+					resolve,
+					reject,
+					max
+				)(rest, i + 1, nextTreated);
 			};
 			transaction.onerror = function (e) {
-				hook({ message: BULK_INSERT_MESSAGES.error, error: e });
+				hook({ message: BULK_INSERT_MESSAGES.bulkInsertError, error: e });
 				reject('fail');
 			};
 		} else {
-			hook({ message: BULK_INSERT_MESSAGES.finished });
+			hook({ message: BULK_INSERT_MESSAGES.bulkInsertFinished });
 			resolve('success');
 		}
 	} catch (e) {
-		hook({ message: BULK_INSERT_MESSAGES.error, error: e });
+		hook({ message: BULK_INSERT_MESSAGES.bulkInsertError, error: e });
 		reject('fail');
 	}
 };
@@ -75,7 +84,7 @@ function bulkInsert(db, store, hook = () => null) {
 		const lots = split(entities, BULK_LIMIT);
 		return new Promise((resolve, reject) => {
 			try {
-				bulkPush(db, store, hook, resolve, reject)(lots);
+				bulkPush(db, store, hook, resolve, reject, entities.length)(lots);
 			} catch (e) {
 				reject(e);
 			}

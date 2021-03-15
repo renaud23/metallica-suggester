@@ -1,4 +1,5 @@
 import createIndex from './create-index';
+import MESSAGES from './create-store-messages';
 import {
 	openStorage,
 	idbBulkInsert,
@@ -13,20 +14,20 @@ async function fill(
 	log = (args) => console.log(args),
 	version = 1
 ) {
-	log({ message: 'fill-store/start' });
+	log({ message: MESSAGES.start });
 	const index = await createIndex(fields, entities);
-	log({ message: 'fill-store/index-ready-to-store' });
+	log({ message: MESSAGES.indexCreated });
 	const prepared = Object.entries(index).map(function ([id, suggestions]) {
 		return { suggestions, id };
 	});
 	try {
 		const db = await openStorage(name, version);
 		await clearDb(db);
-		log({ message: 'fill-store/clear-store' });
+		log({ message: MESSAGES.storeClear });
 		await idbBulkInsert(db, CONSTANTES.STORE_NAME, function (args) {
 			log(args);
 		})(prepared);
-		log({ message: 'fill-store/done' });
+		log({ message: MESSAGES.done });
 		return 'success';
 	} catch (e) {
 		log({ error: e });
