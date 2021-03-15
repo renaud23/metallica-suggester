@@ -3,8 +3,8 @@ import { fillStore } from '../create-store';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 
-async function createStore(storeName, fields, entities) {
-	await fillStore(storeName, fields, entities);
+async function createStore(storeName, fields, entities, log) {
+	await fillStore(storeName, fields, entities, log);
 }
 
 function StoreTools({ entities, storeName, fields }) {
