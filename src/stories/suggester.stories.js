@@ -2,7 +2,7 @@ import React from 'react';
 import Suggester from '../suggester';
 
 export function DefaultSuggester() {
-	return <Suggester />;
+	return <Suggester storeName="naf-rev2" />;
 }
 
 const story = {

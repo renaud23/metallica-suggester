@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+import CONSTANTE from './constantes';
 function getIDB() {
 	return indexedDB;
 	// const what = self || window;
@@ -17,10 +18,20 @@ function openStorage(name, version = 1) {
 		let db;
 		let doIt = true;
 
-		request.onupgradeneeded = function (e) {
+		request.onupgradeneeded = function () {
 			doIt = false;
-			e.target.transaction.abort();
-			reject('fail');
+			db = request.result;
+			const store = db.createObjectStore(CONSTANTE.STORE_NAME, {
+				keyPath: 'id',
+			});
+			store.createIndex(
+				CONSTANTE.STORE_INDEX_NAME,
+				CONSTANTE.STORE_INDEX_PATH,
+				{
+					multiEntry: true,
+				}
+			);
+			resolve(db);
 		};
 
 		request.onsuccess = function () {

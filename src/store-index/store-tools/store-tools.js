@@ -67,8 +67,6 @@ function StoreTools({ entities, storeName, fields }) {
 				setProgress(percent);
 				break;
 			case CREATE_STORE_MESSAGES.done.type:
-				// setDisplay(false);
-				// setProgress(0);
 				break;
 			default:
 		}

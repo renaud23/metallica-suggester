@@ -1,7 +1,7 @@
 import createIndex from './create-index';
 import MESSAGES from './create-store-messages';
 import {
-	openStorage,
+	openOrCreateStorage,
 	idbBulkInsert,
 	CONSTANTES,
 	clearDb,
@@ -21,7 +21,7 @@ async function fill(
 		return { suggestions, id };
 	});
 	try {
-		const db = await openStorage(name, version);
+		const db = await openOrCreateStorage(name, version);
 		await clearDb(db);
 		log({ message: MESSAGES.storeClear });
 		await idbBulkInsert(db, CONSTANTES.STORE_NAME, function (args) {
