@@ -5,7 +5,7 @@ import {
 	idbBulkInsert,
 	CONSTANTES,
 	clearDb,
-} from '../commons-idb';
+} from '../../commons-idb';
 
 async function fill(
 	name,
@@ -14,13 +14,13 @@ async function fill(
 	log = (args) => console.log(args),
 	version = 1
 ) {
-	log({ message: MESSAGES.start });
-	const index = await createIndex(fields, entities);
-	log({ message: MESSAGES.indexCreated });
-	const prepared = Object.entries(index).map(function ([id, suggestions]) {
-		return { suggestions, id };
-	});
 	try {
+		log({ message: MESSAGES.start });
+		const index = await createIndex(fields, entities);
+		log({ message: MESSAGES.indexCreated });
+		const prepared = Object.entries(index).map(function ([id, suggestions]) {
+			return { suggestions, id };
+		});
 		const db = await openOrCreateStorage(name, version);
 		await clearDb(db);
 		log({ message: MESSAGES.storeClear });
@@ -29,8 +29,8 @@ async function fill(
 		})(prepared);
 		log({ message: MESSAGES.done });
 		return 'success';
-	} catch (e) {
-		log({ error: e });
+	} catch (exception) {
+		log({ message: { ...MESSAGES.error, exception } });
 	}
 }
 

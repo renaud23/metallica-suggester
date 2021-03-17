@@ -1,4 +1,4 @@
-import { openStorage } from './commons-idb';
+import { openStorage } from '../commons-idb';
 
 async function open(name) {
 	try {

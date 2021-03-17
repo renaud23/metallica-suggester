@@ -24,13 +24,9 @@ function openStorage(name, version = 1) {
 			const store = db.createObjectStore(CONSTANTE.STORE_NAME, {
 				keyPath: 'id',
 			});
-			store.createIndex(
-				CONSTANTE.STORE_INDEX_NAME,
-				CONSTANTE.STORE_INDEX_PATH,
-				{
-					multiEntry: true,
-				}
-			);
+			store.createIndex(CONSTANTE.STORE_INDEX_NAME, 'id', {
+				multiEntry: false,
+			});
 			resolve(db);
 		};
 

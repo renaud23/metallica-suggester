@@ -1,1 +1,1 @@
-export { default as SuggesterContainer } from './suggester-container';
+export { default as Suggester } from './suggester';

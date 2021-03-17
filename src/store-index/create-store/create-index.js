@@ -18,8 +18,11 @@ function merge(index, tokens, e) {
 function createIndex(fields, entities) {
 	const tokenizer = createEntityTokenizer(fields);
 	return entities.reduce(function (a, e) {
-		const tokens = tokenizer(e);
-		return merge(a, tokens, e);
+		const { id } = e;
+		if (id) {
+			const tokens = tokenizer(e);
+			return merge(a, tokens, e);
+		} else throw new Error(`Missing id on entity.`);
 	}, {});
 }
 

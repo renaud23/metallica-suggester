@@ -11,12 +11,19 @@ async function fetchNaf() {
 	return fetch('/naf-rev2.json').then((response) => response.json());
 }
 
+function prepareForIndex(naf) {
+	return Object.values(naf).map(function (rubrique) {
+		const { code } = rubrique;
+		return { ...rubrique, id: code };
+	});
+}
+
 export function CreateFillStore() {
 	const [entities, setEntities] = useState(undefined);
 	useEffect(function () {
 		async function init() {
 			const naf = await fetchNaf();
-			setEntities(Object.values(naf));
+			setEntities(prepareForIndex(naf));
 		}
 		init();
 	}, []);
