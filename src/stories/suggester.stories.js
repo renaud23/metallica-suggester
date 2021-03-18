@@ -38,6 +38,20 @@ export function DefaultSuggester() {
 	);
 }
 
+export function DefaultSuggesterWithCOG() {
+	return (
+		<>
+			<Suggester
+				storeName="naf-rev2"
+				version="1"
+				optionRenderer={OptionRenderer}
+				language="French"
+			/>
+			<LoremParagraph />
+		</>
+	);
+}
+
 const story = {
 	title: 'Suggester',
 	component: Suggester,

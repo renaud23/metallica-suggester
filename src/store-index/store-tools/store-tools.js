@@ -58,16 +58,21 @@ function StoreTools({ entities, storeName, fields }) {
 	const follow = useCallback(function (args) {
 		const { message, percent } = args;
 		const { type } = message;
+		console.log(message);
 		switch (type) {
-			case CREATE_STORE_MESSAGES.start.type:
-				setDisplay(true);
-				setProgress(0);
-				break;
-			case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
-				setProgress(percent);
-				break;
-			case CREATE_STORE_MESSAGES.done.type:
-				break;
+			case CREATE_STORE_MESSAGES.startCreateIndex.type:
+			case CREATE_STORE_MESSAGES.createIndexDone.type:
+			case CREATE_STORE_MESSAGES.startInsertBatch.type:
+			case CREATE_STORE_MESSAGES.insertBatchDone.type:
+			// case CREATE_STORE_MESSAGES.startCreateIndex.type:
+			// 	setDisplay(true);
+			// 	setProgress(0);
+			// 	break;
+			// case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
+			// 	setProgress(percent);
+			// 	break;
+			// case CREATE_STORE_MESSAGES.done.type:
+			// 	break;
 			default:
 		}
 	}, []);
