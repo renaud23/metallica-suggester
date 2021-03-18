@@ -1,4 +1,4 @@
-import createEntityTokenizer from './create-tokenizer';
+import { createTokenizer } from '../../commons-tokenizer';
 
 function merge(index, tokens, e) {
 	return tokens.reduce(
@@ -16,7 +16,7 @@ function merge(index, tokens, e) {
 }
 
 function createIndex(fields, entities) {
-	const tokenizer = createEntityTokenizer(fields);
+	const tokenizer = createTokenizer(fields);
 	return entities.reduce(function (a, e) {
 		const { id } = e;
 		if (id) {

@@ -1,3 +1,3 @@
-const INITIAL = { search: '' };
+const INITIAL = { search: '', options: [], focused: false, expended: false };
 
 export default INITIAL;

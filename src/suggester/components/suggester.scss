@@ -1,0 +1,59 @@
+.lunatic-suggester {
+	position: relative;
+	min-height: 30px;
+	width: 450px;
+	z-index: 0;
+
+	&:focus {
+		outline: none;
+	}
+
+	.lunatic-suggester-container {
+		position: absolute;
+		width: 100%;
+		overflow: hidden;
+		position: absolute;
+		z-index: 0;
+
+		/* */
+		border: solid 1px gray;
+
+		&.focused {
+			box-shadow: 0 2px 2px grey;
+			z-index: 1;
+		}
+		background-color: snow;
+		/* */
+
+		.lunatic-suggester-selection {
+			.lunatic-suggester-input {
+				border: none;
+				margin: 0;
+				padding: 0;
+				background-color: transparent;
+				&:focus {
+					outline: none;
+				}
+
+				/* */
+				height: 30px;
+				line-height: 30px;
+				width: 100%;
+				/* */
+			}
+		}
+
+		.lunatic-suggester-panel {
+			ul,
+			li,
+			div,
+			span {
+				margin: 0;
+				padding: 0;
+				border: none;
+				line-height: 1em;
+				list-style: none;
+			}
+		}
+	}
+}

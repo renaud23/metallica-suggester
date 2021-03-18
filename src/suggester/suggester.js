@@ -1,9 +1,14 @@
 import React, { useReducer, useEffect } from 'react';
-import { reducer, INITIAL_STATE, SuggesterContext } from './state-management';
+import PropTypes from 'prop-types';
+import {
+	reducer,
+	INITIAL_STATE,
+	SuggesterContext,
+	actions,
+} from './state-management';
 import { Suggester } from './components';
 import { searching } from '../searching';
-import { string } from 'prop-types';
-import { DomainTwoTone } from '@material-ui/icons';
+import { DefaultOptionRenderer } from './components';
 
 function isValideSearch(search) {
 	if (typeof search === 'string' && search.trim().length) {
@@ -12,23 +17,30 @@ function isValideSearch(search) {
 	return false;
 }
 
-function LunaticSuggester({ className, storeName, version, labelledBy }) {
+function LunaticSuggester({
+	className,
+	storeName,
+	version,
+	labelledBy,
+	optionRenderer,
+	language,
+}) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search } = state;
 
 	useEffect(
 		function () {
 			async function doIt() {
-				const results = await searching(search, storeName, version);
-				console.log(results);
+				const results = await searching(search, storeName, version, language);
+				dispatch(actions.onUpdateOptions(results));
 			}
 			if (isValideSearch(search)) {
 				doIt();
 			} else {
-				// TODO
+				dispatch(actions.onUpdateOptions([]));
 			}
 		},
-		[search, storeName, version]
+		[search, storeName, version, language]
 	);
 	return (
 		<SuggesterContext.Provider value={[state, dispatch]}>
@@ -37,9 +49,26 @@ function LunaticSuggester({ className, storeName, version, labelledBy }) {
 				storeName={storeName}
 				version={version}
 				labelledBy={labelledBy}
+				optionRenderer={optionRenderer}
 			/>
 		</SuggesterContext.Provider>
 	);
 }
+
+LunaticSuggester.propTypes = {
+	className: PropTypes.string,
+	storeName: PropTypes.string.isRequired,
+	version: PropTypes.string.isRequired,
+	labelledBy: PropTypes.string,
+	optionRenderer: PropTypes.func,
+	language: PropTypes.string,
+};
+
+LunaticSuggester.defaultProps = {
+	className: undefined,
+	labelledBy: undefined,
+	optionRenderer: DefaultOptionRenderer,
+	language: 'French',
+};
 
 export default LunaticSuggester;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Suggester from '../suggester';
+import './custom-option.scss';
 
 function LoremParagraph() {
 	return (
@@ -13,10 +14,25 @@ function LoremParagraph() {
 	);
 }
 
+function OptionRenderer({ option, active, index }) {
+	const { libelle, code } = option;
+	return (
+		<div className="naf-option">
+			<span className="code">{code}</span>
+			<span className="libelle">{libelle}</span>
+		</div>
+	);
+}
+
 export function DefaultSuggester() {
 	return (
 		<>
-			<Suggester storeName="naf-rev2" version="1" />
+			<Suggester
+				storeName="naf-rev2"
+				version="1"
+				optionRenderer={OptionRenderer}
+				language="French"
+			/>
 			<LoremParagraph />
 		</>
 	);

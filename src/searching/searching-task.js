@@ -8,11 +8,11 @@ export function isWorkerCompatible() {
 	return false;
 }
 
-function create(searh, storeName, version) {
+function create(searh, storeName, version, language) {
 	if (isWorkerCompatible()) {
 		return new Promise(function (resolve) {
 			const worker = new CreateSearchWorker();
-			worker.postMessage({ searh, storeName, version });
+			worker.postMessage({ searh, storeName, version, language });
 			worker.addEventListener('message', function (e) {
 				const { data } = e;
 
@@ -20,7 +20,7 @@ function create(searh, storeName, version) {
 			});
 		});
 	} else {
-		return Promise.resolve(searching(searh, storeName, version));
+		return Promise.resolve(searching(searh, storeName, version, language));
 	}
 }
 

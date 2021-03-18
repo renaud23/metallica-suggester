@@ -1,7 +1,6 @@
-import tokenizer from 'string-tokenizer';
-import removeAccents from 'remove-accents';
 import { openStorage } from '../commons-idb';
 import { CONSTANTES } from '../commons-idb';
+import { queryTokenizer } from '../commons-tokenizer';
 import score from './compute-score';
 
 let STORES = {};
@@ -19,15 +18,6 @@ async function getDb(name, version) {
 	}
 }
 
-function tokenize(search) {
-	const { string } = tokenizer()
-		.input(removeAccents(`${search}`).toLowerCase())
-		.tokens({ string: /[\w]+/ })
-		.resolve();
-
-	return Array.isArray(string) ? string : [string];
-}
-
 function searchToken(token, index) {
 	const range = IDBKeyRange.bound(token, `${token}${CONSTANTES.MAX_STRING}`);
 	return new Promise(function (resolve, reject) {
@@ -42,13 +32,18 @@ function searchToken(token, index) {
 	});
 }
 
-async function searching(search, storeName, version, max = 30) {
+function prepare(response) {
+	return response.map(({ suggestion }) => suggestion);
+}
+
+async function searching(search, storeName, version, language) {
+	const max = 30;
 	try {
 		const db = await getDb(storeName, version);
 		const transaction = db.transaction(CONSTANTES.STORE_NAME, 'readonly');
 		const store = transaction.objectStore(CONSTANTES.STORE_NAME);
 		const index = store.index(CONSTANTES.STORE_INDEX_NAME);
-		const tokens = tokenize(search);
+		const tokens = queryTokenizer(search, language);
 		if (tokens && tokens.length) {
 			const results = await Promise.all(
 				tokens.map((token) => searchToken(token, index))
@@ -56,13 +51,11 @@ async function searching(search, storeName, version, max = 30) {
 			const suggestions = results.reduce(function (a, step, i) {
 				return { ...a, [tokens[i]]: step };
 			}, {});
-
 			const resultat = score(suggestions, tokens, max);
-
 			if (max && max < resultat.length) {
-				return resultat.slice(0, max);
+				return prepare(resultat.slice(0, max));
 			}
-			return resultat;
+			return prepare(resultat);
 		}
 		return [];
 	} catch (e) {

@@ -11,7 +11,12 @@ function Selection() {
 
 	return (
 		<div className="lunatic-suggester-selection">
-			<input type="text" onChange={onChange} value={search} />
+			<input
+				className="lunatic-suggester-input"
+				type="text"
+				onChange={onChange}
+				value={search}
+			/>
 		</div>
 	);
 }

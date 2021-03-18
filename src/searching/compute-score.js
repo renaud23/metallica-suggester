@@ -40,6 +40,7 @@ function compute(results, tokens) {
 				[id]: { suggestion, count: 1, similarity: { [token]: similarity } },
 			};
 		}, {});
+		// console.log(distance);
 
 		const scores = Object.values(countEntities).map(function ({
 			suggestion,
@@ -48,9 +49,9 @@ function compute(results, tokens) {
 		}) {
 			const simiCoef = Object.values(similarity).reduce((a, b) => a * b, 1.0);
 			const dist = count / nbTokens;
-			return { suggestion, score: dist * simiCoef };
+			return { suggestion, score: dist * simiCoef, similarity };
 		});
-
+		// console.log(scores);
 		const sorted = scores.sort(function (a, b) {
 			if (a.score < b.score) {
 				return 1;
