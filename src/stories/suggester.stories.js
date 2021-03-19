@@ -24,7 +24,7 @@ function OptionRenderer({ option, active, index }) {
 	);
 }
 
-export function DefaultSuggester() {
+export function DefaultSuggesterWithNafRev2() {
 	return (
 		<>
 			<Suggester

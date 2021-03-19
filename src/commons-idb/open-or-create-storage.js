@@ -18,21 +18,29 @@ function openStorage(name, version = 1) {
 		let db;
 		let doIt = true;
 
-		request.onupgradeneeded = function () {
+		request.onupgradeneeded = function (e) {
 			doIt = false;
-			db = request.result;
-			const store = db.createObjectStore(CONSTANTE.STORE_NAME, {
+			db = e.target.result;
+			const store = db.createObjectStore(CONSTANTE.STORE_DATA_NAME, {
 				keyPath: 'id',
+			});
+			db.createObjectStore(CONSTANTE.STORE_INFO_NAME, {
+				keyPath: 'name',
 			});
 			store.createIndex(CONSTANTE.STORE_INDEX_NAME, 'tokens', {
 				multiEntry: true,
 			});
-			resolve(db);
+
+			const txn = e.target.transaction;
+			txn.oncomplete = function () {
+				resolve(db);
+			};
 		};
 
 		request.onsuccess = function () {
-			db = request.result;
-			if (doIt) resolve(db);
+			if (doIt) {
+				resolve(request.result);
+			}
 		};
 
 		request.onerror = function (e) {

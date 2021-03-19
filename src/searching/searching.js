@@ -40,8 +40,8 @@ async function searching(search, storeName, version, language) {
 	const max = 30;
 	try {
 		const db = await getDb(storeName, version);
-		const transaction = db.transaction(CONSTANTES.STORE_NAME, 'readonly');
-		const store = transaction.objectStore(CONSTANTES.STORE_NAME);
+		const transaction = db.transaction(CONSTANTES.STORE_DATA_NAME, 'readonly');
+		const store = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
 		const index = store.index(CONSTANTES.STORE_INDEX_NAME);
 		const tokens = queryTokenizer(search, language);
 		if (tokens && tokens.length) {

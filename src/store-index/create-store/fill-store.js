@@ -22,7 +22,7 @@ async function fill(
 		await clearDb(db);
 		log({ message: MESSAGES.storeClear });
 		log({ message: MESSAGES.startInsertBatch });
-		await idbBulkInsert(db, CONSTANTES.STORE_NAME, function (args) {
+		await idbBulkInsert(db, CONSTANTES.STORE_DATA_NAME, function (args) {
 			log(args);
 		})(index);
 		log({ message: MESSAGES.insertBatchDone });
