@@ -42,7 +42,7 @@ export function DefaultSuggesterWithCOG() {
 	return (
 		<>
 			<Suggester
-				storeName="naf-rev2"
+				storeName="cog"
 				version="1"
 				optionRenderer={OptionRenderer}
 				language="French"

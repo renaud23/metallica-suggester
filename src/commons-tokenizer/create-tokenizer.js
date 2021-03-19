@@ -1,6 +1,7 @@
 import tokenizer from 'string-tokenizer';
 import removeAccents from 'remove-accents';
 import prepareStringIndexation from './prepare-string-indexation';
+import softTokenizer from './soft-tokenizer';
 import defaultStopWords from './stop-words';
 import filterStemmer from './filter-stemmer';
 import filterLength from './filter-length';
@@ -36,6 +37,9 @@ function filterStopWords(tokens, stops = defaultStopWords) {
 function createTokenizer(fields = []) {
 	const FIELDS_TOKENIZER_MAP = fields.reduce(function (a, f) {
 		const { name, rules = [], min, language = 'French', stopWords } = f;
+		if (rules === 'soft') {
+			return { ...a, [name]: softTokenizer };
+		}
 		if (rules.length) {
 			const tokenRules = rules.reduce(function (a, pattern, index) {
 				return { ...a, [`pattern${name}${index}`]: pattern };

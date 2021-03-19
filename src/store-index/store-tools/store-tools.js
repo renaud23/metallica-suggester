@@ -71,16 +71,11 @@ function StoreTools({ entities, storeName, fields }) {
 			case CREATE_STORE_MESSAGES.startInsertBatch.type:
 				setProgress(0);
 				break;
+			case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
+				setProgress(percent);
+				break;
 			case CREATE_STORE_MESSAGES.insertBatchDone.type:
-			// case CREATE_STORE_MESSAGES.startCreateIndex.type:
-			// 	setDisplay(true);
-			// 	setProgress(0);
-			// 	break;
-			// case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
-			// 	setProgress(percent);
-			// 	break;
-			// case CREATE_STORE_MESSAGES.done.type:
-			// 	break;
+				break;
 			default:
 		}
 	}, []);

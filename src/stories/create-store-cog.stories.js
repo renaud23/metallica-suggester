@@ -3,10 +3,9 @@ import { StoreTools } from '../store-index';
 
 //nccenr libelle
 const FIELDS = [
-	{ name: 'libelle' },
-	// { name: 'libelle', rules: [/[\w]+/], language: 'French', min: 3 },
-	// { name: 'nccenr', rules: [/[\w]+/], language: 'French', min: 3 },
-	{ name: 'com' },
+	{ name: 'libelle', rules: 'soft' },
+	{ name: 'nccenr', rules: 'soft' },
+	{ name: 'com', rules: 'soft' },
 ];
 const STORE_NAME = 'cog';
 
