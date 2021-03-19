@@ -51,10 +51,12 @@ async function searching(search, storeName, version, language) {
 			const suggestions = results.reduce(function (a, step, i) {
 				return { ...a, [tokens[i]]: step };
 			}, {});
+
 			const resultat = score(suggestions, tokens, max);
 			if (max && max < resultat.length) {
 				return prepare(resultat.slice(0, max));
 			}
+
 			return prepare(resultat);
 		}
 		return [];

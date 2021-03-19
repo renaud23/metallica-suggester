@@ -15,9 +15,9 @@ async function fetchCOG() {
 }
 
 function prepareForIndex(cog) {
-	return cog.map(function (commune) {
+	return cog.map(function (commune, i) {
 		const { com } = commune;
-		return { ...commune, id: com };
+		return { ...commune, id: `${com}-${i}` };
 	});
 }
 

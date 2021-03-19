@@ -24,8 +24,8 @@ function openStorage(name, version = 1) {
 			const store = db.createObjectStore(CONSTANTE.STORE_NAME, {
 				keyPath: 'id',
 			});
-			store.createIndex(CONSTANTE.STORE_INDEX_NAME, 'id', {
-				multiEntry: false,
+			store.createIndex(CONSTANTE.STORE_INDEX_NAME, 'tokens', {
+				multiEntry: true,
 			});
 			resolve(db);
 		};
