@@ -1,6 +1,6 @@
 import { openStorage } from '../commons-idb';
 import { CONSTANTES } from '../commons-idb';
-import { queryTokenizer } from '../commons-tokenizer';
+import { queryParserTokenized } from '../commons-tokenizer';
 import score from './compute-score';
 
 let STORES = {};
@@ -43,7 +43,7 @@ async function searching(search, storeName, version, language) {
 		const transaction = db.transaction(CONSTANTES.STORE_DATA_NAME, 'readonly');
 		const store = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
 		const index = store.index(CONSTANTES.STORE_INDEX_NAME);
-		const tokens = queryTokenizer(search, language);
+		const tokens = queryParserTokenized(search, language);
 		if (tokens && tokens.length) {
 			const results = await Promise.all(
 				tokens.map((token) => searchToken(token, index))

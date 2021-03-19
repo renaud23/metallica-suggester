@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import { fillStore, CREATE_STORE_MESSAGES } from '../create-store';
@@ -37,11 +38,18 @@ function Progress({ display, value = 0 }) {
 	return null;
 }
 
-async function createStore(storeName, fields, entities, log) {
-	await fillStore(storeName, fields, entities, log);
+async function createStore(
+	storeName,
+	fields,
+	queryParser,
+	version,
+	entities,
+	log
+) {
+	await fillStore(storeName, fields, queryParser, version, entities, log);
 }
 
-function StoreTools({ entities, storeName, fields }) {
+function StoreTools({ entities, storeName, fields, queryParser, version }) {
 	const [disabled, setDisabled] = useState(true);
 	const [display, setDisplay] = useState(false);
 	const [progress, setProgress] = useState(0);
@@ -84,12 +92,19 @@ function StoreTools({ entities, storeName, fields }) {
 		function () {
 			async function go() {
 				setDisabled(true);
-				await createStore(storeName, fields, entities, follow);
+				await createStore(
+					storeName,
+					fields,
+					queryParser,
+					version,
+					entities,
+					follow
+				);
 				setDisabled(false);
 			}
 			go();
 		},
-		[storeName, fields, entities, follow]
+		[storeName, fields, entities, queryParser, version, follow]
 	);
 
 	return (
@@ -101,5 +116,32 @@ function StoreTools({ entities, storeName, fields }) {
 		</div>
 	);
 }
+const ALLOWED_LANGUAGES = ['French', 'English'];
+const QUERY_PARSER_TYPES = ['tokenized', 'soft'];
+StoreTools.propTypes = {
+	storeName: PropTypes.string.isRequired,
+	fields: PropTypes.arrayOf(
+		PropTypes.shape({
+			name: PropTypes.string.isRequired,
+			rules: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+			language: PropTypes.oneOf(ALLOWED_LANGUAGES),
+			min: PropTypes.number,
+		})
+	).isRequired,
+	queryParser: PropTypes.shape({
+		type: PropTypes.oneOf(QUERY_PARSER_TYPES),
+		params: PropTypes.shape({ language: PropTypes.oneOf(ALLOWED_LANGUAGES) }),
+	}),
+	version: PropTypes.string.isRequired,
+};
 
 export default StoreTools;
+
+// const STORE_INFO = {
+// 	name: 'naf-rev2',
+// 	queryParser: 'tokenized',
+// 	fields: [
+// 		{ name: 'libelle', rules: [/[\w]+/], language: 'French', min: 3 },
+// 		{ name: 'code' },
+// 	],
+// };

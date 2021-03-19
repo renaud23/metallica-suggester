@@ -1,17 +1,15 @@
-import CONSTANTES from './constantes';
-
-/**
- *
- */
-function clearStore(db) {
-	new Promise(function (resolve) {
-		const transaction = db.transaction(CONSTANTES.STORE_DATA_NAME, 'readwrite');
-
-		transaction.oncomplete = function () {
-			resolve(true);
-		};
-		const storeIndex = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
-		storeIndex.clear();
+function clearStore(db, name) {
+	new Promise(function (resolve, reject) {
+		try {
+			const transaction = db.transaction(name, 'readwrite');
+			transaction.oncomplete = function () {
+				resolve(true);
+			};
+			const store = transaction.objectStore(name);
+			store.clear();
+		} catch (e) {
+			reject(e);
+		}
 	});
 }
 

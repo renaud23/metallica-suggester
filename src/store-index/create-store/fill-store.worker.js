@@ -6,9 +6,8 @@ self.onmessage = async function (e) {
 	function log(message) {
 		self.postMessage(message);
 	}
-	const { name, fields, entities, version } = e.data;
-	await fillStore(name, fields, entities, log, version);
-
+	const { name, fields, entities, version, queryParser } = e.data;
+	await fillStore(name, fields, queryParser, version, entities, log);
 	self.postMessage('success');
 };
 

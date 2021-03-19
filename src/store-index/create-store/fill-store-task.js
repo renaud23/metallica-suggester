@@ -8,11 +8,18 @@ export function isWorkerCompatible() {
 	return false;
 }
 
-function create(name, fields, entities = [], log = () => null, version) {
+function create(
+	name,
+	fields,
+	queryParser,
+	version,
+	entities = [],
+	log = () => null
+) {
 	if (isWorkerCompatible()) {
 		return new Promise(function (resolve) {
 			const worker = new CreateFillStoreWorker();
-			worker.postMessage({ name, fields, entities, version });
+			worker.postMessage({ name, fields, entities, version, queryParser });
 			worker.addEventListener('message', function (e) {
 				const { data } = e;
 				if (data === 'success') {
@@ -23,7 +30,9 @@ function create(name, fields, entities = [], log = () => null, version) {
 			});
 		});
 	} else {
-		return Promise.resolve(fillStore(name, fields, entities, log, version));
+		return Promise.resolve(
+			fillStore(name, fields, queryParser, version, entities, log)
+		);
 	}
 }
 

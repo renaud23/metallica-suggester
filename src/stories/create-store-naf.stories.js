@@ -6,6 +6,10 @@ const NAF_FIELDS = [
 	{ name: 'code' },
 ];
 const STORE_NAME = 'naf-rev2';
+const QUERY_PARSER = {
+	type: 'tokenized',
+	params: { language: 'French' },
+};
 
 async function fetchNaf() {
 	return fetch('/naf-rev2.json').then((response) => response.json());
@@ -34,6 +38,8 @@ export function CreateFillStore() {
 				entities={entities}
 				fields={NAF_FIELDS}
 				storeName={STORE_NAME}
+				queryParser={QUERY_PARSER}
+				version="1"
 			/>
 		</>
 	);

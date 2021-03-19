@@ -8,6 +8,7 @@ const FIELDS = [
 	{ name: 'com', rules: 'soft' },
 ];
 const STORE_NAME = 'cog';
+const QUERY_PARSER = { type: 'soft' };
 
 async function fetchCOG() {
 	return fetch('/communes-2019.json').then((response) => response.json());
@@ -32,7 +33,13 @@ export function CreateFillStore() {
 
 	return (
 		<>
-			<StoreTools entities={entities} fields={FIELDS} storeName={STORE_NAME} />
+			<StoreTools
+				entities={entities}
+				fields={FIELDS}
+				storeName={STORE_NAME}
+				queryPArser={QUERY_PARSER}
+				version="1"
+			/>
 		</>
 	);
 }
