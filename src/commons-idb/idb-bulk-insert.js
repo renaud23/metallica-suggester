@@ -39,7 +39,6 @@ const bulkPush = (db, name, hook, resolve, reject, max) => (
 	treated = 0
 ) => {
 	const [first, ...rest] = lot;
-
 	try {
 		if (first) {
 			const transaction = db.transaction(name, 'readwrite');
@@ -68,7 +67,7 @@ const bulkPush = (db, name, hook, resolve, reject, max) => (
 			};
 			transaction.onerror = function (e) {
 				hook({ message: BULK_INSERT_MESSAGES.bulkInsertError, error: e });
-				reject('fail');
+				reject(e);
 			};
 		} else {
 			hook({ message: BULK_INSERT_MESSAGES.bulkInsertFinished });
@@ -76,7 +75,7 @@ const bulkPush = (db, name, hook, resolve, reject, max) => (
 		}
 	} catch (e) {
 		hook({ message: BULK_INSERT_MESSAGES.bulkInsertError, error: e });
-		reject('fail');
+		reject(e);
 	}
 };
 

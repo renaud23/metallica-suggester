@@ -24,26 +24,34 @@ function createIndex(
 	let done = 0;
 	const size = 1000;
 	const max = entities.length;
-	const index = {};
-	entities.forEach(function (e) {
-		const { id } = e;
+
+	return entities.map(function (suggestion) {
+		const { id } = suggestion;
 		if (id) {
-			const tokens = tokenizer(e);
-			done++;
-			if (done % size === 0 || done === max) {
-				log({
-					message: {
-						...MESSAGES.indexBatch,
-						max,
-						done,
-						percent: (done / max) * 100,
-					},
-				});
-			}
-			mergeWithSideEffects(index, tokens, e);
+			const tokens = tokenizer(suggestion);
+			return { id, suggestion, tokens };
 		} else throw new Error(`Missing id on entity.`);
-	}, {});
-	return index;
+	}, []);
+	// const index = {};
+	// entities.forEach(function (e) {
+	// 	const { id } = e;
+	// 	if (id) {
+	// 		const tokens = tokenizer(e);
+	// 		done++;
+	// 		if (done % size === 0 || done === max) {
+	// 			log({
+	// 				message: {
+	// 					...MESSAGES.indexBatch,
+	// 					max,
+	// 					done,
+	// 					percent: (done / max) * 100,
+	// 				},
+	// 			});
+	// 		}
+	// 		mergeWithSideEffects(index, tokens, e);
+	// 	} else throw new Error(`Missing id on entity.`);
+	// }, {});
+	// return index;
 }
 
 export default createIndex;
