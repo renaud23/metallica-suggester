@@ -3,11 +3,11 @@ import CONSTANTES from './constantes';
 /**
  *
  */
-async function clearStore(db) {
-	new Promise((resolve) => {
+function clearStore(db) {
+	new Promise(function (resolve) {
 		const transaction = db.transaction(CONSTANTES.STORE_NAME, 'readwrite');
 
-		transaction.oncomplete = () => {
+		transaction.oncomplete = function () {
 			resolve(true);
 		};
 		const storeIndex = transaction.objectStore(CONSTANTES.STORE_NAME);

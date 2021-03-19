@@ -48,12 +48,14 @@ const bulkPush = (db, name, hook, resolve, reject, max) => (
 			transaction.oncomplete = function () {
 				const nextTreated = treated + first.length;
 				hook({
-					message: BULK_INSERT_MESSAGES.bulkInsertComplete,
-					nb: first.length,
-					treated: nextTreated,
-					step: i,
-					max,
-					percent: Math.round((nextTreated / max) * 100),
+					message: {
+						...BULK_INSERT_MESSAGES.bulkInsertComplete,
+						nb: first.length,
+						treated: nextTreated,
+						step: i,
+						max,
+						percent: Math.round((nextTreated / max) * 100),
+					},
 				});
 				bulkPush(
 					db,
