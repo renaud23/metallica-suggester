@@ -37,7 +37,7 @@ export function CreateFillStore() {
 				entities={entities}
 				fields={FIELDS}
 				storeName={STORE_NAME}
-				queryPArser={QUERY_PARSER}
+				queryParser={QUERY_PARSER}
 				version="1"
 			/>
 		</>
