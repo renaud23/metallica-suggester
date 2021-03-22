@@ -31,7 +31,6 @@ export function DefaultSuggesterWithNafRev2() {
 				storeName="naf-rev2"
 				version="1"
 				optionRenderer={OptionRenderer}
-				language="French"
 			/>
 			<LoremParagraph />
 		</>
@@ -41,12 +40,7 @@ export function DefaultSuggesterWithNafRev2() {
 export function DefaultSuggesterWithCOG() {
 	return (
 		<>
-			<Suggester
-				storeName="cog"
-				version="1"
-				optionRenderer={OptionRenderer}
-				language="French"
-			/>
+			<Suggester storeName="cog" version="1" optionRenderer={OptionRenderer} />
 			<LoremParagraph />
 		</>
 	);

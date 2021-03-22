@@ -7,3 +7,4 @@ export {
 } from './idb-bulk-insert';
 export { default as clearDb } from './clear-store';
 export { CONSTANTES };
+export { default as getEntity } from './get-entity';
