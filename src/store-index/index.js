@@ -1,2 +1,2 @@
 export { StoreTools } from './store-tools';
-export { fillStore } from './create-store';
+export { createFillStore } from './create-store';

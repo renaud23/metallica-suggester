@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-import { fillStore, CREATE_STORE_MESSAGES } from '../create-store';
+import { createFillStore, CREATE_STORE_MESSAGES } from '../create-store';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import Box from '@material-ui/core/Box';
@@ -38,21 +38,22 @@ function Progress({ display, value = 0 }) {
 	return null;
 }
 
-async function createStore(
-	storeName,
-	fields,
-	queryParser,
-	version,
-	entities,
-	log
-) {
-	await fillStore(storeName, fields, queryParser, version, entities, log);
+function createStore(storeName, fields, queryParser, version, entities, log) {
+	return createFillStore(
+		storeName,
+		fields,
+		queryParser,
+		version,
+		entities,
+		log
+	);
 }
 
 function StoreTools({ entities, storeName, fields, queryParser, version }) {
 	const [disabled, setDisabled] = useState(true);
 	const [display, setDisplay] = useState(false);
 	const [progress, setProgress] = useState(0);
+	const [startLoding, setStartLoading] = useState(false);
 
 	useEffect(
 		function () {
@@ -88,23 +89,34 @@ function StoreTools({ entities, storeName, fields, queryParser, version }) {
 		}
 	}, []);
 
-	const load = useCallback(
+	const load = useCallback(function () {
+		setStartLoading(true);
+	}, []);
+
+	useEffect(
 		function () {
-			async function go() {
-				setDisabled(true);
-				await createStore(
-					storeName,
-					fields,
-					queryParser,
-					version,
-					entities,
-					follow
-				);
-				setDisabled(false);
+			const [launch, terminate] = createStore(
+				storeName,
+				fields,
+				queryParser,
+				version,
+				entities,
+				follow
+			);
+			if (startLoding) {
+				async function go() {
+					setDisabled(true);
+					await launch();
+					setDisabled(false);
+					setStartLoading(false);
+				}
+				go();
 			}
-			go();
+			return function () {
+				terminate();
+			};
 		},
-		[storeName, fields, entities, queryParser, version, follow]
+		[storeName, fields, entities, queryParser, version, follow, startLoding]
 	);
 
 	return (
@@ -136,12 +148,3 @@ StoreTools.propTypes = {
 };
 
 export default StoreTools;
-
-// const STORE_INFO = {
-// 	name: 'naf-rev2',
-// 	queryParser: 'tokenized',
-// 	fields: [
-// 		{ name: 'libelle', rules: [/[\w]+/], language: 'French', min: 3 },
-// 		{ name: 'code' },
-// 	],
-// };

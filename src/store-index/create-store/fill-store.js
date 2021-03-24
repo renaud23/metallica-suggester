@@ -36,8 +36,9 @@ async function fill(
 		log({ message: MESSAGES.insertBatchDone });
 		log({ message: MESSAGES.done });
 		return 'success';
-	} catch (exception) {
-		log({ message: { ...MESSAGES.error, exception } });
+	} catch (e) {
+		console.error(e);
+		log({ message: { ...MESSAGES.error } });
 	}
 }
 
