@@ -8,7 +8,7 @@ const NAF_FIELDS = [
 const STORE_NAME = 'naf-rev2';
 const QUERY_PARSER = {
 	type: 'tokenized',
-	params: { language: 'French' },
+	params: { language: 'French', pattern: /[\w.]+/ },
 };
 
 async function fetchNaf() {

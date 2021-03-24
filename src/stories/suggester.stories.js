@@ -1,5 +1,6 @@
 import React from 'react';
 import Suggester from '../suggester';
+import classnames from 'classnames';
 import './custom-option.scss';
 
 function LoremParagraph() {
@@ -14,11 +15,23 @@ function LoremParagraph() {
 	);
 }
 
-function OptionRenderer({ option, active, index }) {
-	const { libelle, code } = option;
+function OptionNafRenderer({ option, active, index }) {
+	const { libelle, code, niveau } = option;
 	return (
 		<div className="naf-option">
-			<span className="code">{code}</span>
+			<span className={classnames('code', niveau)} title={`${niveau} ${code}`}>
+				{code}
+			</span>
+			<span className="libelle">{libelle}</span>
+		</div>
+	);
+}
+
+function OptionCogRenderer({ option, active, index }) {
+	const { libelle, com } = option;
+	return (
+		<div className="cog-option">
+			<span className="code">{com}</span>
 			<span className="libelle">{libelle}</span>
 		</div>
 	);
@@ -30,7 +43,7 @@ export function DefaultSuggesterWithNafRev2() {
 			<Suggester
 				storeName="naf-rev2"
 				version="1"
-				optionRenderer={OptionRenderer}
+				optionRenderer={OptionNafRenderer}
 			/>
 			<LoremParagraph />
 		</>
@@ -40,7 +53,11 @@ export function DefaultSuggesterWithNafRev2() {
 export function DefaultSuggesterWithCOG() {
 	return (
 		<>
-			<Suggester storeName="cog" version="1" optionRenderer={OptionRenderer} />
+			<Suggester
+				storeName="cog"
+				version="1"
+				optionRenderer={OptionCogRenderer}
+			/>
 			<LoremParagraph />
 		</>
 	);
