@@ -1,4 +1,5 @@
 export { default as getStemmer } from './get-stemmer';
 export { default as createTokenizer } from './create-tokenizer';
-export { default as queryParserTokenized } from './query-parser-tokenized';
-export { default as queryParserSoft } from './query-parser-soft';
+export { default as prepareStringIndexation } from './prepare-string-indexation';
+export { default as filterStemmer } from './filter-stemmer';
+export { default as filterLength } from './filter-length';

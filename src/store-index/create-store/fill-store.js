@@ -1,7 +1,7 @@
 import createIndex from './create-index';
 import MESSAGES from './create-store-messages';
 import {
-	openOrCreateStorage,
+	openOrCreateDb,
 	idbBulkInsert,
 	CONSTANTES,
 	clearDb,
@@ -21,7 +21,7 @@ async function fill(
 		log({ message: MESSAGES.startCreateIndex });
 		const index = await createIndex(fields, entities, log);
 		log({ message: MESSAGES.createIndexDone });
-		const db = await openOrCreateStorage(name, version);
+		const db = await openOrCreateDb(name, version);
 		// nettoyage des stores idb
 		await clearDb(db, CONSTANTES.STORE_DATA_NAME);
 		await clearDb(db, CONSTANTES.STORE_INFO_NAME);

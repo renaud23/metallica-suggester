@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { openStore } from '../../store-index';
+import { openDb } from '../../commons-idb';
 
 function CheckStore({ storeName, version, children }) {
 	const [ready, setReady] = useState(0);
@@ -7,7 +7,7 @@ function CheckStore({ storeName, version, children }) {
 		function () {
 			async function init() {
 				try {
-					const store = await openStore(storeName, version);
+					const store = await openDb(storeName, version);
 					if (store) {
 						setReady(200);
 					}

@@ -1,6 +1,5 @@
 import tokenizer from 'string-tokenizer';
-import filterStemmer from './filter-stemmer';
-import filterLength from './filter-length';
+import { filterStemmer, filterLength } from '../commons-tokenizer';
 
 function toArray(tokens) {
 	return Array.isArray(tokens) ? tokens : [tokens];

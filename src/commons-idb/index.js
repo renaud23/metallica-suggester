@@ -1,6 +1,6 @@
 import * as CONSTANTES from './constantes';
-export { default as openStorage } from './open-storage';
-export { default as openOrCreateStorage } from './open-or-create-storage';
+export { default as openDb } from './open-db';
+export { default as openOrCreateDb } from './open-or-create-db';
 export {
 	default as idbBulkInsert,
 	BULK_INSERT_MESSAGES,
