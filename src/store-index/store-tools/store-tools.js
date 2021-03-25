@@ -1,11 +1,30 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from 'react';
+// import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-import { createFillStore, CREATE_STORE_MESSAGES } from '../create-store';
+// import { createFillStore, CREATE_STORE_MESSAGES } from '../create-store';
+import createAppendTask from '../append';
+import { clearDb, CONSTANTES } from '../../commons-idb';
+import create from '../create';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import Box from '@material-ui/core/Box';
+import './store-tools.scss';
+
+function Messages({ last }) {
+	const areaEl = useRef();
+	const { current } = areaEl;
+	useEffect(
+		function () {
+			if (last && current) {
+				current.value += '\n' + JSON.stringify(last);
+				current.scrollTop = current.scrollHeight;
+			}
+		},
+		[last, current]
+	);
+	return <textarea disabled={true} className="log" ref={areaEl}></textarea>;
+}
 
 function Progress({ display, value = 0 }) {
 	if (display) {
@@ -38,113 +57,103 @@ function Progress({ display, value = 0 }) {
 	return null;
 }
 
-function createStore(storeName, fields, queryParser, version, entities, log) {
-	return createFillStore(
-		storeName,
-		fields,
-		queryParser,
-		version,
-		entities,
-		log
-	);
-}
-
-function StoreTools({ entities, storeName, fields, queryParser, version }) {
+function StoreTools({ storeName, fields, queryParser, version, getNext }) {
 	const [disabled, setDisabled] = useState(true);
+	const [db, setDb] = useState(undefined);
 	const [display, setDisplay] = useState(false);
 	const [progress, setProgress] = useState(0);
-	const [startLoding, setStartLoading] = useState(false);
+	const [startLoading, setStartLoading] = useState(false);
+	const [message, setMessage] = useState(undefined);
 
 	useEffect(
 		function () {
-			if (entities && storeName && fields) {
-				setDisabled(false);
+			let unmount = false;
+			async function doIt() {
+				const _db = await create(storeName, version, queryParser);
+				setDb(_db);
+				if (!unmount) {
+					setDisabled(false);
+				}
 			}
+
+			doIt();
+			return function () {
+				unmount = true;
+			};
 		},
-		[entities, storeName, fields]
+		[storeName, version, queryParser]
 	);
 
-	const follow = useCallback(function (args) {
-		const { message } = args;
-		const { type, percent } = message;
-		console.log(message);
-		switch (type) {
-			case CREATE_STORE_MESSAGES.startCreateIndex.type:
-				setDisplay(true);
-				setProgress(0);
-				break;
-			case CREATE_STORE_MESSAGES.indexBatch.type:
-				setProgress(percent);
-				break;
-			case CREATE_STORE_MESSAGES.createIndexDone.type:
-			case CREATE_STORE_MESSAGES.startInsertBatch.type:
-				setProgress(0);
-				break;
-			case CREATE_STORE_MESSAGES.bulkInsertComplete.type:
-				setProgress(percent);
-				break;
-			case CREATE_STORE_MESSAGES.insertBatchDone.type:
-				break;
-			default:
-		}
-	}, []);
-
-	const load = useCallback(function () {
-		setStartLoading(true);
-	}, []);
-
 	useEffect(
 		function () {
-			const [launch, terminate] = createStore(
-				storeName,
-				fields,
-				queryParser,
-				version,
-				entities,
-				follow
-			);
-			if (startLoding) {
-				async function go() {
+			let _abort = undefined;
+			async function doIt() {
+				if (startLoading) {
 					setDisabled(true);
-					await launch();
+					setDisplay(true);
+					setProgress(0);
+					let current = getNext();
+					clearDb(db, CONSTANTES.STORE_DATA_NAME);
+					while (current !== undefined) {
+						const { entities, percent } = current;
+						const [start, abort] = createAppendTask(
+							storeName,
+							version,
+							fields,
+							({ message }) => setMessage(message)
+						);
+						_abort = abort;
+						await start(entities);
+						current = getNext();
+						setProgress(percent);
+					}
+					_abort = undefined;
 					setDisabled(false);
 					setStartLoading(false);
 				}
-				go();
 			}
+			doIt();
 			return function () {
-				terminate();
+				if (_abort) {
+					_abort();
+				}
 			};
 		},
-		[storeName, fields, entities, queryParser, version, follow, startLoding]
+		[startLoading, getNext, storeName, version, fields, db]
 	);
 
 	return (
 		<div className="store-tools">
-			<Fab disabled={disabled} color="primary" aria-label="add" onClick={load}>
+			<Fab
+				disabled={disabled}
+				color="primary"
+				aria-label="add"
+				onClick={() => setStartLoading(true)}
+			>
 				<Loop />
 			</Fab>
 			<Progress display={display} value={progress} />
+			<Messages last={message} />
 		</div>
 	);
 }
-const ALLOWED_LANGUAGES = ['French', 'English'];
-const QUERY_PARSER_TYPES = ['tokenized', 'soft'];
-StoreTools.propTypes = {
-	storeName: PropTypes.string.isRequired,
-	fields: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string.isRequired,
-			rules: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-			language: PropTypes.oneOf(ALLOWED_LANGUAGES),
-			min: PropTypes.number,
-		})
-	).isRequired,
-	queryParser: PropTypes.shape({
-		type: PropTypes.oneOf(QUERY_PARSER_TYPES),
-		params: PropTypes.shape({ language: PropTypes.oneOf(ALLOWED_LANGUAGES) }),
-	}),
-	version: PropTypes.string.isRequired,
-};
+// const ALLOWED_LANGUAGES = ['French', 'English'];
+// const QUERY_PARSER_TYPES = ['tokenized', 'soft'];
+// StoreTools.propTypes = {
+// 	storeName: PropTypes.string.isRequired,
+// 	fields: PropTypes.arrayOf(
+// 		PropTypes.shape({
+// 			name: PropTypes.string.isRequired,
+// 			rules: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+// 			language: PropTypes.oneOf(ALLOWED_LANGUAGES),
+// 			min: PropTypes.number,
+// 		})
+// 	).isRequired,
+// 	queryParser: PropTypes.shape({
+// 		type: PropTypes.oneOf(QUERY_PARSER_TYPES),
+// 		params: PropTypes.shape({ language: PropTypes.oneOf(ALLOWED_LANGUAGES) }),
+// 	}),
+// 	version: PropTypes.string.isRequired,
+// };
 
 export default StoreTools;
