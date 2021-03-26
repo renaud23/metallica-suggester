@@ -7,9 +7,7 @@ function toArray(tokens) {
 
 function parser(query, language = 'English', reg = /[\w]+/) {
 	const pattern = { tokens: reg };
-	const wath = tokenizer().input(query).tokens(pattern).resolve();
-	console.log({ wath });
-	const { tokens } = wath;
+	const { tokens } = tokenizer().input(query).tokens(pattern).resolve();
 	return filterStemmer(filterLength(toArray(tokens)), language);
 }
 

@@ -15,7 +15,6 @@ function create(searh, storeName, version) {
 			worker.postMessage({ searh, storeName, version });
 			worker.addEventListener('message', function (e) {
 				const { data } = e;
-
 				resolve(data);
 			});
 		});

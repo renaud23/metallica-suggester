@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createGetNextPage } from './common-tools';
+import { createGetNextPage, storeCog } from './common-tools';
 import { StoreTools } from '../store-index';
-
-//nccenr libelle
-const FIELDS = [
-	{ name: 'libelle', rules: 'soft' },
-	{ name: 'nccenr', rules: 'soft' },
-	{ name: 'com', rules: 'soft' },
-];
-const STORE_NAME = 'cog';
-const QUERY_PARSER = { type: 'soft' };
 
 async function fetchCOG() {
 	return fetch('/communes-2019.json').then((response) => response.json());
@@ -22,7 +13,9 @@ function prepareForIndex(cog) {
 	});
 }
 
-export function CreateFillStore() {
+const { name, fields, queryParser } = storeCog;
+
+export function CreateFillStoreCog() {
 	const [entities, setEntities] = useState(undefined);
 
 	useEffect(function () {
@@ -36,15 +29,13 @@ export function CreateFillStore() {
 	const getNext = createGetNextPage(entities);
 
 	return (
-		<>
-			<StoreTools
-				getNext={getNext}
-				fields={FIELDS}
-				storeName={STORE_NAME}
-				queryParser={QUERY_PARSER}
-				version="1"
-			/>
-		</>
+		<StoreTools
+			getNext={getNext}
+			fields={fields}
+			storeName={name}
+			queryParser={queryParser}
+			version="1"
+		/>
 	);
 }
 

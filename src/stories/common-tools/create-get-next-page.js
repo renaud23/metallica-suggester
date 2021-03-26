@@ -1,4 +1,5 @@
-function get(entities, size = 1000) {
+// simule la réccup par page des données.
+function get(entities, size = 2000) {
 	if (entities) {
 		const max = entities.length;
 		const lots = entities.reduce(
