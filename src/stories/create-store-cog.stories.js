@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createGetNextPage } from './common-tools';
 import { StoreTools } from '../store-index';
 
 //nccenr libelle
@@ -23,6 +24,7 @@ function prepareForIndex(cog) {
 
 export function CreateFillStore() {
 	const [entities, setEntities] = useState(undefined);
+
 	useEffect(function () {
 		async function init() {
 			const cog = await fetchCOG();
@@ -31,10 +33,12 @@ export function CreateFillStore() {
 		init();
 	}, []);
 
+	const getNext = createGetNextPage(entities);
+
 	return (
 		<>
 			<StoreTools
-				entities={entities}
+				getNext={getNext}
 				fields={FIELDS}
 				storeName={STORE_NAME}
 				queryParser={QUERY_PARSER}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { createGetNextPage } from './common-tools';
 import { StoreTools } from '../store-index';
 
-const NAF_FIELDS = [
+const FIELDS = [
 	{ name: 'libelle', rules: [/[\w]+/], language: 'French', min: 3 },
 	{ name: 'code' },
 ];
@@ -32,11 +33,13 @@ export function CreateFillStore() {
 		init();
 	}, []);
 
+	const getNext = createGetNextPage(entities);
+
 	return (
 		<>
 			<StoreTools
-				entities={entities}
-				fields={NAF_FIELDS}
+				getNext={getNext}
+				fields={FIELDS}
 				storeName={STORE_NAME}
 				queryParser={QUERY_PARSER}
 				version="1"
