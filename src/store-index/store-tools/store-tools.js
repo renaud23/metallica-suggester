@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-// import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
-// import { createFillStore, CREATE_STORE_MESSAGES } from '../create-store';
 import createAppendTask from '../append';
 import { clearDb, CONSTANTES } from '../../commons-idb';
 import create from '../create';
@@ -137,23 +135,5 @@ function StoreTools({ storeName, fields, queryParser, version, getNext }) {
 		</div>
 	);
 }
-// const ALLOWED_LANGUAGES = ['French', 'English'];
-// const QUERY_PARSER_TYPES = ['tokenized', 'soft'];
-// StoreTools.propTypes = {
-// 	storeName: PropTypes.string.isRequired,
-// 	fields: PropTypes.arrayOf(
-// 		PropTypes.shape({
-// 			name: PropTypes.string.isRequired,
-// 			rules: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-// 			language: PropTypes.oneOf(ALLOWED_LANGUAGES),
-// 			min: PropTypes.number,
-// 		})
-// 	).isRequired,
-// 	queryParser: PropTypes.shape({
-// 		type: PropTypes.oneOf(QUERY_PARSER_TYPES),
-// 		params: PropTypes.shape({ language: PropTypes.oneOf(ALLOWED_LANGUAGES) }),
-// 	}),
-// 	version: PropTypes.string.isRequired,
-// };
 
 export default StoreTools;
