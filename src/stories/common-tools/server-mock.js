@@ -45,7 +45,7 @@ function createPageResponse(entities, path, page, size) {
 	const previous =
 		page > 0 ? makeLink(path, { size, page: page - 1 }) : undefined;
 	const next =
-		page < max - 1 ? makeLink(path, { size, page: page + 1 }) : undefined;
+		page <= max ? makeLink(path, { size, page: page + 1 }) : undefined;
 
 	return {
 		data,
@@ -54,8 +54,8 @@ function createPageResponse(entities, path, page, size) {
 	};
 }
 
-function createRootResponse(path) {
-	const first = makeLink(path, { size: 300, page: 1 });
+function createRootResponse(path, size = 300) {
+	const first = makeLink(path, { size, page: 1 });
 	return { links: { first } };
 }
 

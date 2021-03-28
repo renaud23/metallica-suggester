@@ -5,33 +5,14 @@ import { clearDb, CONSTANTES } from '../commons-idb';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import Suggester from '../suggester';
-import { Progress, storeCog } from './common-tools';
+import {
+	Progress,
+	storeCog,
+	OptionCogRenderer,
+	browsePages,
+} from './common-tools';
 
 const { name, fields, queryParser } = storeCog;
-
-async function browsePages(request, todo = async () => null) {
-	const response = await fetch(request);
-	const { status } = response;
-	const body = await response.json();
-
-	if (status === 200 || status === 206) {
-		const { links, data, pagination } = body;
-		const { first, next } = links;
-
-		if (first) {
-			const { href } = first;
-			await browsePages(href, todo);
-		} else if (next) {
-			const { href } = next;
-			await todo(data, pagination);
-			await browsePages(href, todo);
-		} else {
-			await todo('Finished');
-		}
-	} else {
-		throw new Error('Gloops');
-	}
-}
 
 function useCreateStore(name, version, queryParser) {
 	const [db, setDb] = useState(undefined);
@@ -51,12 +32,22 @@ function useCreateStore(name, version, queryParser) {
 }
 
 export function AllInOne() {
+	const [disabled, setDisabled] = useState(true);
 	const [start, setStart] = useState(false);
 	const [abort, setAbort] = useState(undefined);
 	const [progress, setProgress] = useState(0);
 	const db = useCreateStore(name, '1', queryParser);
 
-	const todo = useCallback(async function (results, pagination) {
+	useEffect(
+		function () {
+			if (db) {
+				setDisabled(false);
+			}
+		},
+		[db]
+	);
+
+	const indexPage = useCallback(async function (results, pagination) {
 		if (Array.isArray(results)) {
 			const { percent } = pagination;
 			const [start, _abort] = createAppendTask(
@@ -66,7 +57,6 @@ export function AllInOne() {
 				({ message }) => console.log(message)
 			);
 			setAbort(_abort);
-
 			await start(results);
 			setProgress(percent);
 			setAbort(undefined);
@@ -88,18 +78,22 @@ export function AllInOne() {
 		function () {
 			async function go() {
 				if (start && db) {
+					setDisabled(true);
 					clearDb(db, CONSTANTES.STORE_DATA_NAME);
-					await browsePages('/communes', todo);
+					await browsePages('/communes', indexPage);
+					setStart(false);
+					setDisabled(false);
 				}
 			}
 			go();
 		},
-		[start, db, todo]
+		[start, db, indexPage]
 	);
+
 	return (
 		<>
 			<Fab
-				disabled={false}
+				disabled={disabled}
 				color="primary"
 				aria-label="add"
 				onClick={() => setStart(true)}
@@ -107,6 +101,15 @@ export function AllInOne() {
 				<Loop />
 			</Fab>
 			<Progress value={progress} display={true} />
+			{db ? (
+				<Suggester
+					storeName="cog"
+					version="1"
+					optionRenderer={OptionCogRenderer}
+				/>
+			) : (
+				"Store en cours d'ouverture, ou de création..."
+			)}
 		</>
 	);
 }
