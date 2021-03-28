@@ -38,7 +38,7 @@ function withWorker(name, version, fields, log) {
 		});
 	}
 
-	async function terminate() {
+	function terminate() {
 		if (start) {
 			worker.terminate();
 		}
