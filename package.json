@@ -68,7 +68,8 @@
 		"msw-storybook-addon": "^1.1.0",
 		"node-sass": "^5.0.0",
 		"parse-url": "^5.0.2",
-		"prettier": "^2.2.1"
+		"prettier": "^2.2.1",
+		"object-sizeof": "^1.6.1"
 	},
 	"prettier": {
 		"singleQuote": true,

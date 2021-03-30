@@ -1,4 +1,7 @@
 import { rest } from 'msw';
+import sizeOf from 'object-sizeof';
+import fetchCOG from './fetch-cog';
+import fetchProut from './fetch-naf-rev2';
 
 function extractParams([param, value, ...rest]) {
 	if (param && value) {
@@ -13,17 +16,6 @@ function parserSearch(search) {
 		return extractParams(result);
 	}
 	return {};
-}
-
-async function fetchCOG() {
-	return fetch('/communes-2019.json').then((response) => response.json());
-}
-
-function prepareForIndex(cog) {
-	return cog.map(function (commune, i) {
-		const { com } = commune;
-		return { ...commune, id: `${com}-${i}` };
-	});
 }
 
 function makeLink(path, params, method = 'GET') {
@@ -49,7 +41,7 @@ function createPageResponse(entities, path, page, size) {
 
 	return {
 		data,
-		pagination: { length, page, percent },
+		pagination: { length, page, max, percent },
 		links: { next, previous },
 	};
 }
@@ -59,28 +51,51 @@ function createRootResponse(path, size = 300) {
 	return { links: { first } };
 }
 
+function createResolver(path) {
+	return function (req, res, ctx, entities) {
+		const { url } = req;
+		const { search } = url;
+		const { page, size } = parserSearch(search);
+		if (page && size) {
+			const responsePage = createPageResponse(
+				entities,
+				path,
+				parseInt(page),
+				parseInt(size)
+			);
+			const { pagination } = responsePage;
+			const { max } = pagination;
+			return res(
+				ctx.status(206),
+				ctx.set('Cache-Control', 'public'),
+				ctx.set('Content-Range', `page ${page}/${max}`),
+				ctx.set('Content-length', sizeOf(responsePage)),
+				ctx.json(responsePage)
+			);
+		} else {
+			return res(ctx.status(200), ctx.json(createRootResponse(path)));
+		}
+	};
+}
+
 function mock(path) {
-	let communes;
+	let communes, naf;
 	fetchCOG().then(function (cog) {
-		communes = Object.values(prepareForIndex(cog));
+		communes = cog;
 	});
 
-	return rest.get(path, function (req, res, ctx) {
-		if (communes) {
-			const { url } = req;
-			const { search } = url;
-			const { page, size } = parserSearch(search);
+	fetchProut().then(function (r) {
+		naf = r;
+	});
 
-			if (page && size) {
-				return res(
-					ctx.status(206),
-					ctx.json(
-						createPageResponse(communes, path, parseInt(page), parseInt(size))
-					)
-				);
-			} else {
-				return res(ctx.status(200), ctx.json(createRootResponse(path)));
-			}
+	const communesResolver = createResolver('/communes', communes);
+	const nafResolver = createResolver('/naf', naf);
+
+	return rest.get(path, function (req, res, ctx) {
+		if (path === '/communes' && communes) {
+			return communesResolver(req, res, ctx, communes);
+		} else if (path === '/naf-rev2' && naf) {
+			return nafResolver(req, res, ctx, naf);
 		} else {
 			return res(
 				ctx.status(404),

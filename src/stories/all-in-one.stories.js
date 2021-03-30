@@ -1,4 +1,3 @@
-import { serverMock } from './common-tools';
 import React, { useEffect, useState, useCallback } from 'react';
 import { createAppendTask, createStore } from '../store-index';
 import { clearDb, CONSTANTES } from '../commons-idb';
@@ -11,6 +10,7 @@ import {
 	OptionCogRenderer,
 	browsePages,
 } from './common-tools';
+import { serverMock } from './common-tools';
 
 const { name, fields, queryParser } = storeCog;
 
@@ -80,7 +80,7 @@ export function AllInOne() {
 				if (start && db) {
 					setDisabled(true);
 					clearDb(db, CONSTANTES.STORE_DATA_NAME);
-					await browsePages('/communes', indexPage);
+					await browsePages('/communes?page=1&size=4000', indexPage);
 					setStart(false);
 					setDisabled(false);
 				}

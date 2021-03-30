@@ -30,15 +30,20 @@ function prepareEntities(fields, entities, log) {
 }
 
 async function append(name, version, fields, entities, log = () => null) {
-	const prepared = prepareEntities(fields, entities, log);
-	const db = await openDb(name, version);
-	log({ message: MESSAGES.startInsertBatch });
-	await idbBulkInsert(db, CONSTANTES.STORE_DATA_NAME, function (args) {
-		log(args);
-	})(prepared);
-	log({ message: MESSAGES.insertBatchDone });
-	log({ message: MESSAGES.done });
-	return 'success';
+	try {
+		const prepared = prepareEntities(fields, entities, log);
+		const db = await openDb(name, version);
+		log({ message: MESSAGES.startInsertBatch });
+		await idbBulkInsert(db, CONSTANTES.STORE_DATA_NAME, function (args) {
+			const { message } = args;
+			log({ message });
+		})(prepared);
+		log({ message: MESSAGES.insertBatchDone });
+		log({ message: MESSAGES.done });
+		return 'success';
+	} catch (e) {
+		log({ message: 'une erreur est survenue' });
+	}
 }
 
 export default append;

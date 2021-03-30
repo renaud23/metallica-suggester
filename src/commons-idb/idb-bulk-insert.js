@@ -74,7 +74,7 @@ const bulkPush = (db, name, hook, resolve, reject, max) => (
 			resolve('success');
 		}
 	} catch (e) {
-		hook({ message: BULK_INSERT_MESSAGES.bulkInsertError, error: e });
+		hook({ message: BULK_INSERT_MESSAGES.bulkInsertError });
 		reject(e);
 	}
 };
