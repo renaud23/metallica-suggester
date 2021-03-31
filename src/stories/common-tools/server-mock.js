@@ -1,7 +1,5 @@
 import { rest } from 'msw';
 import sizeOf from 'object-sizeof';
-import fetchCOG from './fetch-cog';
-import fetchProut from './fetch-naf-rev2';
 
 function extractParams([param, value, ...rest]) {
 	if (param && value) {
@@ -78,24 +76,17 @@ function createResolver(path) {
 	};
 }
 
-function mock(path) {
-	let communes, naf;
-	fetchCOG().then(function (cog) {
-		communes = cog;
+function mock(path, fetchData) {
+	let data;
+	fetchData().then(function (d) {
+		data = d;
 	});
 
-	fetchProut().then(function (r) {
-		naf = r;
-	});
-
-	const communesResolver = createResolver('/communes', communes);
-	const nafResolver = createResolver('/naf', naf);
+	const communesResolver = createResolver(path, data);
 
 	return rest.get(path, function (req, res, ctx) {
-		if (path === '/communes' && communes) {
-			return communesResolver(req, res, ctx, communes);
-		} else if (path === '/naf-rev2' && naf) {
-			return nafResolver(req, res, ctx, naf);
+		if (data) {
+			return communesResolver(req, res, ctx, data);
 		} else {
 			return res(
 				ctx.status(404),

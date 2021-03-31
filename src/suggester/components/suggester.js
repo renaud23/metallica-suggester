@@ -1,27 +1,11 @@
 import React, { useCallback, useContext } from 'react';
-import classnames from 'classnames';
 import { actions, SuggesterContext } from '../state-management';
+import SuggesterContainer from './suggester-container';
 import CheckStore from './check-store';
 import Selection from './selection';
 import Panel from './panel';
+import createOnKeyDownCallback from './create-on-keydown-callback';
 import './suggester.scss';
-
-function SuggesterContainer({ children, className, focused, onFocus, onBlur }) {
-	return (
-		<div
-			className={classnames('lunatic-suggester', className, {
-				focused,
-			})}
-			tabIndex="0"
-			onFocus={onFocus}
-			onBlur={onBlur}
-		>
-			<div className={classnames('lunatic-suggester-container', { focused })}>
-				{children}
-			</div>
-		</div>
-	);
-}
 
 function Suggester({
 	className,
@@ -44,6 +28,7 @@ function Suggester({
 		},
 		[dispatch]
 	);
+	const onKeyDown = useCallback(createOnKeyDownCallback(dispatch), [dispatch]);
 	return (
 		<CheckStore storeName={storeName} version={version}>
 			<SuggesterContainer
@@ -51,6 +36,7 @@ function Suggester({
 				focused={focused}
 				onFocus={onFocus}
 				onBlur={onBlur}
+				onKeyDown={onKeyDown}
 			>
 				<Selection />
 				<Panel optionRenderer={optionRenderer} />

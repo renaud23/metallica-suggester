@@ -22,14 +22,18 @@ function withoutWorker(name, version, fields, log) {
 function withWorker(name, version, fields, log) {
 	const worker = new AppendWorker();
 	let start = false;
+	let stop = false;
 
-	function launch(entities) {
+	function launch(entities, post = () => null) {
 		return new Promise(function (resolve) {
 			start = true;
 			worker.postMessage({ name, version, fields, entities });
 			worker.addEventListener('message', function (e) {
 				const { data } = e;
 				if (data === 'success') {
+					if (!stop) {
+						post();
+					}
 					resolve(data);
 				} else {
 					log(data);
@@ -40,6 +44,7 @@ function withWorker(name, version, fields, log) {
 
 	function terminate() {
 		if (start) {
+			stop = true;
 			worker.terminate();
 		}
 	}

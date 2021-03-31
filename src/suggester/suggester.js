@@ -24,6 +24,8 @@ function LunaticSuggester({
 	labelledBy,
 	optionRenderer,
 	language,
+	onSelect,
+	onChange,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search } = state;
@@ -33,14 +35,16 @@ function LunaticSuggester({
 			async function doIt() {
 				const results = await searching(search, storeName, version, language);
 				dispatch(actions.onUpdateOptions(results));
+				onChange(results, search);
 			}
 			if (isValideSearch(search)) {
 				doIt();
 			} else {
 				dispatch(actions.onUpdateOptions([]));
+				onChange([], search);
 			}
 		},
-		[search, storeName, version, language]
+		[search, storeName, version, language, onChange]
 	);
 	return (
 		<SuggesterContext.Provider value={[state, dispatch]}>
@@ -62,6 +66,8 @@ LunaticSuggester.propTypes = {
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
 	language: PropTypes.string,
+	onSelect: PropTypes.func,
+	onChange: PropTypes.func,
 };
 
 LunaticSuggester.defaultProps = {
@@ -69,6 +75,8 @@ LunaticSuggester.defaultProps = {
 	labelledBy: undefined,
 	optionRenderer: DefaultOptionRenderer,
 	language: 'French',
+	onSelect: () => null,
+	onChange: () => null,
 };
 
 export default LunaticSuggester;
