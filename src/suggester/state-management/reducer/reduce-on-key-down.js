@@ -2,14 +2,20 @@ import { BINDED_KEYS } from '../../commons-tools';
 
 function reduceArrowDown(state) {
 	const { options, selectedIndex: prec } = state;
-	const selectedIndex = Math.min((prec || 0) + 1, options.length - 1);
-	return { ...state, selectedIndex };
+	if (options.length) {
+		const selectedIndex = Math.min(prec + 1 || 0, options.length - 1);
+		return { ...state, selectedIndex };
+	}
+	return state;
 }
 
-function reduceArrowUp(state) {
+function reduceArrowUp(state, options) {
 	const { selectedIndex: prec } = state;
-	const selectedIndex = Math.max((prec || 0) - 1, 0);
-	return { ...state, selectedIndex };
+	if (options.length) {
+		const selectedIndex = Math.max(prec - 1 || 0, 0);
+		return { ...state, selectedIndex };
+	}
+	return state;
 }
 
 function reduce(state, action) {
