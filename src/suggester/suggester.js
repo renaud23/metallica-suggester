@@ -28,7 +28,7 @@ function LunaticSuggester({
 	onChange,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-	const { search } = state;
+	const { search, selectedIndex } = state;
 
 	useEffect(
 		function () {
@@ -46,6 +46,16 @@ function LunaticSuggester({
 		},
 		[search, storeName, version, language, onChange]
 	);
+
+	useEffect(
+		function () {
+			if (selectedIndex !== undefined) {
+				onSelect(selectedIndex);
+			}
+		},
+		[selectedIndex, onSelect]
+	);
+
 	return (
 		<SuggesterContext.Provider value={[state, dispatch]}>
 			<Suggester

@@ -24,11 +24,13 @@ function Suggester({
 	);
 	const onBlur = useCallback(
 		function () {
-			dispatch(actions.onBlur());
+			if (focused) {
+				dispatch(actions.onBlur());
+			}
 		},
-		[dispatch]
+		[dispatch, focused]
 	);
-	const onKeyDown = useCallback(createOnKeyDownCallback(dispatch), [dispatch]);
+	const onKeyDown = createOnKeyDownCallback(dispatch);
 	return (
 		<CheckStore storeName={storeName} version={version}>
 			<SuggesterContainer

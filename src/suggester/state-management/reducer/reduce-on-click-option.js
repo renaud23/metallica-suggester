@@ -1,8 +1,8 @@
 function reduce(state, action) {
 	const { payload } = action;
-	const { search } = payload;
+	const { index: selectedIndex } = payload;
 
-	return { ...state, search, selectedIndex: undefined };
+	return { ...state, selectedIndex };
 }
 
 export default reduce;
