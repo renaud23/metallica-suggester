@@ -1,16 +1,14 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { createAppendTask, createStore } from '../store-index';
-import { clearDb, CONSTANTES } from '../commons-idb';
+import React, { useEffect, useState } from 'react';
+import { createStore } from '../store-index';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import Suggester from '../suggester';
 import {
-	Progress,
 	storeCog,
 	storeNaf,
 	OptionCogRenderer,
 	OptionNafRenderer,
-	browsePages,
+	Loader,
 } from './common-tools';
 import { serverMock } from './common-tools';
 import fetchCOG from './common-tools/fetch-cog';
@@ -23,23 +21,6 @@ const STORES = [
 
 const { name: storeCogName } = storeCog;
 const { name: storeNafName } = storeNaf;
-
-// function useCreateStore(name, version, queryParser) {
-// 	const [db, setDb] = useState(undefined);
-
-// 	useEffect(
-// 		function () {
-// 			async function doIt() {
-// 				const _db = await createStore(name, version, queryParser);
-// 				setDb(_db);
-// 			}
-
-// 			doIt();
-// 		},
-// 		[name, version, queryParser]
-// 	);
-// 	return db;
-// }
 
 function useCreateStores(stores = []) {
 	const [dbs, setDbs] = useState(undefined);
@@ -61,67 +42,6 @@ function useCreateStores(stores = []) {
 		[stores]
 	);
 	return dbs;
-}
-
-function Loader({ start, db, store }) {
-	const [progress, setProgress] = useState(0);
-	const [abort, setAbort] = useState(undefined);
-	const { name } = store;
-
-	const indexPage = useCallback(async function (results, pagination, store) {
-		if (Array.isArray(results)) {
-			const { percent } = pagination;
-			const { name, fields } = store;
-			const [start, _abort] = createAppendTask(
-				name,
-				'1',
-				fields,
-				({ message }) => null
-			);
-			setAbort(_abort);
-			await start(results, function () {
-				setProgress(percent);
-				setAbort(undefined);
-			});
-		}
-	}, []);
-
-	useEffect(
-		function () {
-			async function go() {
-				try {
-					if (start) {
-						clearDb(db, CONSTANTES.STORE_DATA_NAME);
-						const { href } = store;
-						await browsePages(href, indexPage, store);
-					}
-				} catch (e) {
-					console.log(e);
-				}
-			}
-
-			go();
-		},
-		[start, store, db, indexPage]
-	);
-
-	useEffect(
-		function () {
-			return function () {
-				if (abort) {
-					abort();
-				}
-			};
-		},
-		[abort]
-	);
-
-	return (
-		<>
-			<span style={{ position: 'absolute', top: 0 }}>{name}</span>
-			<Progress value={progress} display={true} />
-		</>
-	);
 }
 
 export function AllInOne() {
@@ -148,14 +68,14 @@ export function AllInOne() {
 			>
 				<Loop />
 			</Fab>
-			{idbx
+			{!disabled
 				? STORES.map(function (store, index) {
 						const { name } = store;
 						const db = idbx[index];
 						return <Loader key={name} start={start} db={db} store={store} />;
 				  })
 				: null}
-			{idbx ? (
+			{!disabled ? (
 				<>
 					<div>COG :</div>
 					<Suggester

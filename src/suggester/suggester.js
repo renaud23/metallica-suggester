@@ -28,7 +28,7 @@ function LunaticSuggester({
 	onChange,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-	const { search, selectedIndex } = state;
+	const { search, selectedIndex, options } = state;
 
 	useEffect(
 		function () {
@@ -50,10 +50,10 @@ function LunaticSuggester({
 	useEffect(
 		function () {
 			if (selectedIndex !== undefined) {
-				onSelect(selectedIndex);
+				onSelect(options[selectedIndex], selectedIndex);
 			}
 		},
-		[selectedIndex, onSelect]
+		[selectedIndex, onSelect, options]
 	);
 
 	return (

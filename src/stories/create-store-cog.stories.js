@@ -1,47 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { createGetNextPage, storeCog } from './common-tools';
-import { StoreTools } from '../store-index';
+import Fab from '@material-ui/core/Fab';
+import Loop from '@material-ui/icons/Loop';
+import { serverMock } from './common-tools';
+import fetchCOG from './common-tools/fetch-cog';
+import { storeCog, useCreateStore, Loader } from './common-tools';
 
-async function fetchCOG() {
-	return fetch('/communes-2019.json').then((response) => response.json());
-}
-
-function prepareForIndex(cog) {
-	return cog.map(function (commune, i) {
-		const { com } = commune;
-		return { ...commune, id: `${com}-${i}` };
-	});
-}
-
-const { name, fields, queryParser } = storeCog;
+const { name } = storeCog;
+const STORE = { ...storeCog, version: '1', href: '/cog/communes' };
 
 export function CreateFillStoreCog() {
-	const [entities, setEntities] = useState(undefined);
+	const [disabled, setDisabled] = useState(true);
+	const [start, setStart] = useState(false);
+	const db = useCreateStore(STORE);
 
-	useEffect(function () {
-		async function init() {
-			const cog = await fetchCOG();
-			setEntities(prepareForIndex(cog));
-		}
-		init();
-	}, []);
-
-	const getNext = createGetNextPage(entities);
+	useEffect(
+		function () {
+			if (db) {
+				setDisabled(false);
+			}
+		},
+		[db]
+	);
 
 	return (
-		<StoreTools
-			getNext={getNext}
-			fields={fields}
-			storeName={name}
-			queryParser={queryParser}
-			version="1"
-		/>
+		<>
+			<Fab
+				disabled={disabled}
+				color="primary"
+				aria-label="add"
+				onClick={() => setStart(true)}
+			>
+				<Loop />
+			</Fab>
+			{start ? (
+				<Loader key={name} start={start} db={db} store={STORE} />
+			) : undefined}
+		</>
 	);
 }
 
 const story = {
 	title: 'store-index/cog',
-	component: StoreTools,
+	component: () => null,
+	parameters: {
+		msw: [serverMock('/cog/communes', fetchCOG)],
+	},
 };
 
 export default story;

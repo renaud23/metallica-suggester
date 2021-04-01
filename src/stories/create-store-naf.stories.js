@@ -1,46 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { createGetNextPage, storeNaf } from './common-tools';
-import { StoreTools } from '../store-index';
+import Fab from '@material-ui/core/Fab';
+import Loop from '@material-ui/icons/Loop';
+import { serverMock } from './common-tools';
+import fetchNafRev2 from './common-tools/fetch-naf-rev2';
+import { storeNaf, useCreateStore, Loader } from './common-tools';
 
-const { name, fields, queryParser } = storeNaf;
+const { name } = storeNaf;
+const STORE = { ...storeNaf, version: '1', href: '/naf-rev2' };
 
-async function fetchNaf() {
-	return fetch('/naf-rev2.json').then((response) => response.json());
-}
+export function CreateFillStoreCog() {
+	const [disabled, setDisabled] = useState(true);
+	const [start, setStart] = useState(false);
+	const db = useCreateStore(STORE);
 
-function prepareForIndex(naf) {
-	return Object.values(naf).map(function (rubrique) {
-		const { code } = rubrique;
-		return { ...rubrique, id: code };
-	});
-}
-
-export function CreateFillStoreNaf() {
-	const [entities, setEntities] = useState(undefined);
-	useEffect(function () {
-		async function init() {
-			const naf = await fetchNaf();
-			setEntities(prepareForIndex(naf));
-		}
-		init();
-	}, []);
-
-	const getNext = createGetNextPage(entities);
+	useEffect(
+		function () {
+			if (db) {
+				setDisabled(false);
+			}
+		},
+		[db]
+	);
 
 	return (
-		<StoreTools
-			getNext={getNext}
-			fields={fields}
-			storeName={name}
-			queryParser={queryParser}
-			version="1"
-		/>
+		<>
+			<Fab
+				disabled={disabled}
+				color="primary"
+				aria-label="add"
+				onClick={() => setStart(true)}
+			>
+				<Loop />
+			</Fab>
+			{start ? (
+				<Loader key={name} start={start} db={db} store={STORE} />
+			) : undefined}
+		</>
 	);
 }
 
 const story = {
 	title: 'store-index/naf',
-	component: StoreTools,
+	component: () => null,
+	parameters: {
+		msw: [serverMock('/naf-rev2', fetchNafRev2)],
+	},
 };
 
 export default story;
