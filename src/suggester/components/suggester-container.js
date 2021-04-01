@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import classnames from 'classnames';
+import { useDocumentAddEventListener } from '../commons-tools';
 
 function SuggesterContainer({
 	children,
@@ -8,24 +9,22 @@ function SuggesterContainer({
 	onFocus,
 	onBlur,
 	onKeyDown,
+	storeName,
 }) {
 	const ref = useRef();
 
-	useEffect(
-		function () {
+	const onClick = useCallback(
+		function (e) {
 			const { current } = ref;
-			function onMouseDown(e) {
-				if (!current.contains(e.target)) {
-					onBlur();
-				}
+
+			if (!current.contains(e.target)) {
+				onBlur();
 			}
-			document.addEventListener('mousedown', onMouseDown);
-			return function () {
-				document.removeEventListener('mousedown', onMouseDown);
-			};
 		},
-		[onBlur, ref]
+		[ref, onBlur]
 	);
+
+	useDocumentAddEventListener('click', onClick);
 
 	return (
 		<div

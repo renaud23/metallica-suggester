@@ -4,6 +4,7 @@ import reduceOnUpdateOptions from './reduce-on-update-options';
 import reduceOnFocus from './reduce-on-focus';
 import reduceOnBlur from './reduce-on-blur';
 import reduceOnClickOption from './reduce-on-click-option';
+import reduceOnKeyDown from './reduce-on-key-down';
 
 function reduce(state, action) {
 	const { type } = action;
@@ -18,6 +19,8 @@ function reduce(state, action) {
 			return reduceOnBlur(state, action);
 		case actions.ON_CLICK_OPTION:
 			return reduceOnClickOption(state, action);
+		case actions.ON_KEY_DOWN:
+			return reduceOnKeyDown(state, action);
 		default:
 			return state;
 	}

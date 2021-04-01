@@ -21,3 +21,6 @@ export const onClickOption = (index) => ({
 	type: ON_CLICK_OPTION,
 	payload: { index },
 });
+
+export const ON_KEY_DOWN = 'lunatic-suggester/on-key-down';
+export const onKeyDown = (key) => ({ type: ON_KEY_DOWN, payload: { key } });
