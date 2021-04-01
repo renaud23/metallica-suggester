@@ -39,7 +39,6 @@ function Suggester({
 				onFocus={onFocus}
 				onBlur={onBlur}
 				onKeyDown={onKeyDown}
-				storeName={storeName}
 			>
 				<Selection />
 				<Panel optionRenderer={optionRenderer} />

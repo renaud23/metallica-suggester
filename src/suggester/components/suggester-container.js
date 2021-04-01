@@ -9,7 +9,6 @@ function SuggesterContainer({
 	onFocus,
 	onBlur,
 	onKeyDown,
-	storeName,
 }) {
 	const ref = useRef();
 
