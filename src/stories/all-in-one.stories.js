@@ -89,6 +89,7 @@ export function AllInOne() {
 					/>
 					<div>NAF-REV2 :</div>
 					<Suggester
+						className="custom-theme"
 						storeName={storeNafName}
 						version="1"
 						optionRenderer={OptionNafRenderer}

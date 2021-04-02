@@ -4,8 +4,8 @@ import { SuggesterContext } from '../../state-management';
 import PanelContainer from './panel-container';
 import OptionContainer from './option-container';
 
-function getContent(options, OptionRender, selectedIndex, focused) {
-	if (focused) {
+function getContent(options, OptionRender, selectedIndex, expended) {
+	if (expended) {
 		return options.map(function (option, index) {
 			const { id } = option;
 			const selected = selectedIndex === index;
@@ -21,8 +21,8 @@ function getContent(options, OptionRender, selectedIndex, focused) {
 
 function Panel({ optionRenderer: OptionRender }) {
 	const [state] = useContext(SuggesterContext);
-	const { options, focused, selectedIndex } = state;
-	const content = getContent(options, OptionRender, selectedIndex, focused);
+	const { options, focused, selectedIndex, expended } = state;
+	const content = getContent(options, OptionRender, selectedIndex, expended);
 
 	return <PanelContainer focused={focused}>{content}</PanelContainer>;
 }

@@ -1,5 +1,5 @@
 function reduce(state) {
-	return { ...state, focused: false };
+	return { ...state, focused: false, expended: false };
 }
 
 export default reduce;

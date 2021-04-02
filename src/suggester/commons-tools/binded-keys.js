@@ -5,6 +5,7 @@ export const BINDED_KEYS = {
 	End: 'End',
 	Enter: 'Enter',
 	Escape: 'Escape',
+	Tab: 'Tab',
 };
 
 export default BINDED_KEYS;

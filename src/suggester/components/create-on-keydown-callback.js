@@ -6,6 +6,9 @@ function create(dispatch) {
 		const { key } = e;
 
 		switch (key) {
+			case BINDED_KEYS.Tab:
+				dispatch(actions.onKeyDown(key));
+				break;
 			case BINDED_KEYS.ArrowDown:
 			case BINDED_KEYS.ArrowUp:
 			case BINDED_KEYS.Home:
