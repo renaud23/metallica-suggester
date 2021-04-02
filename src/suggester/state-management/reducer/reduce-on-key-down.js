@@ -9,8 +9,8 @@ function reduceArrowDown(state) {
 	return state;
 }
 
-function reduceArrowUp(state, options) {
-	const { selectedIndex: prec } = state;
+function reduceArrowUp(state) {
+	const { selectedIndex: prec, options } = state;
 	if (options.length) {
 		const selectedIndex = Math.max(prec - 1 || 0, 0);
 		return { ...state, selectedIndex };

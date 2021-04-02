@@ -2,6 +2,13 @@
 	white-space: nowrap;
 	overflow: hidden;
 
+	&.selected {
+		background-color: darkred;
+		.libelle {
+			color: honeydew;
+		}
+	}
+
 	.code {
 		color: snow;
 		text-align: center;
@@ -31,6 +38,12 @@
 }
 
 .cog-option {
+	&.selected {
+		background-color: goldenrod;
+		.libelle {
+			color: darkgreen;
+		}
+	}
 	.code {
 		color: snow;
 		background-color: darkred;

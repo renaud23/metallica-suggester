@@ -8,7 +8,7 @@ function OptionContainer({ children, index }) {
 	const selected = index === selectedIndex;
 
 	function onClick(e) {
-		// e.stopPropagation();
+		e.stopPropagation();
 		e.preventDefault();
 		dispatch(actions.onClickOption(index));
 	}

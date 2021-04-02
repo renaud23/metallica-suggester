@@ -3,12 +3,13 @@ import classnames from 'classnames';
 import { SuggesterContext } from '../../state-management';
 import OptionContainer from './option-container';
 
-function getContent(options, OptionRender) {
+function getContent(options, OptionRender, selectedIndex) {
 	return options.map(function (option, index) {
 		const { id } = option;
+		const selected = selectedIndex === index;
 		return (
 			<OptionContainer key={id} index={index}>
-				<OptionRender option={option} />
+				<OptionRender option={option} selected={selected} />
 			</OptionContainer>
 		);
 	});
@@ -16,8 +17,8 @@ function getContent(options, OptionRender) {
 
 function Panel({ optionRenderer: OptionRender }) {
 	const [state] = useContext(SuggesterContext);
-	const { options, focused } = state;
-	const content = getContent(options, OptionRender);
+	const { options, focused, selectedIndex } = state;
+	const content = getContent(options, OptionRender, selectedIndex);
 	if (focused) {
 		return (
 			<ul

@@ -1,11 +1,14 @@
 import React from 'react';
+import classnames from 'classnames';
 
-function DefaultOptionRenderer({ option }) {
-	const { id } = option;
+function DefaultOptionRenderer({ option, selected }) {
+	const { id, label } = option;
 	return (
-		<li role="option" aria-selected={false}>
-			{id}
-		</li>
+		<div
+			classNames={classnames('lunatic-suggester-default-option', { selected })}
+		>
+			{label || id}
+		</div>
 	);
 }
 

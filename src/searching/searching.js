@@ -25,7 +25,6 @@ async function searching(search, name, version) {
 		const transaction = db.transaction(CONSTANTES.STORE_DATA_NAME, 'readonly');
 		const store = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
 		const index = store.index(CONSTANTES.STORE_INDEX_NAME);
-
 		const tokens = parser(search);
 		if (tokens && tokens.length) {
 			const tokensSuggestions = await searchTokens(tokens, index);

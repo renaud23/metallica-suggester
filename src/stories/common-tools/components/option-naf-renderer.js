@@ -1,10 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
 
-function OptionNafRenderer({ option, active, index }) {
+function OptionNafRenderer({ option, selected }) {
 	const { libelle, code, niveau } = option;
 	return (
-		<div className="naf-option">
+		<div className={classnames('naf-option', { selected })}>
 			<span className={classnames('code', niveau)} title={`${niveau} ${code}`}>
 				{code}
 			</span>
