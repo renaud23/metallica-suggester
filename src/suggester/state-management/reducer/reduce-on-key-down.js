@@ -18,6 +18,22 @@ function reduceArrowUp(state) {
 	return state;
 }
 
+function reduceHome(state) {
+	const { options } = state;
+	if (options.length) {
+		return { ...state, selectedIndex: 0 };
+	}
+	return state;
+}
+
+function reduceEnd(state) {
+	const { options } = state;
+	if (options.length) {
+		return { ...state, selectedIndex: options.length - 1 };
+	}
+	return state;
+}
+
 function reduce(state, action) {
 	const { payload } = action;
 	const { key } = payload;
@@ -26,6 +42,10 @@ function reduce(state, action) {
 			return reduceArrowDown(state);
 		case BINDED_KEYS.ArrowUp:
 			return reduceArrowUp(state);
+		case BINDED_KEYS.Home:
+			return reduceHome(state);
+		case BINDED_KEYS.End:
+			return reduceEnd(state);
 		default:
 			return state;
 	}
