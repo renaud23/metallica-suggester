@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { actions, SuggesterContext } from '../state-management';
 import SuggesterContainer from './suggester-container';
 import CheckStore from './check-store';
@@ -14,6 +14,7 @@ function Suggester({
 	labelledBy,
 	optionRenderer,
 }) {
+	const inputRef = useRef();
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { focused } = state;
 	const onFocus = useCallback(
@@ -30,6 +31,7 @@ function Suggester({
 		},
 		[dispatch, focused]
 	);
+
 	const onKeyDown = createOnKeyDownCallback(dispatch);
 	return (
 		<CheckStore storeName={storeName} version={version}>
@@ -40,7 +42,7 @@ function Suggester({
 				onBlur={onBlur}
 				onKeyDown={onKeyDown}
 			>
-				<Selection />
+				<Selection ref={inputRef} />
 				<Panel optionRenderer={optionRenderer} />
 			</SuggesterContainer>
 		</CheckStore>

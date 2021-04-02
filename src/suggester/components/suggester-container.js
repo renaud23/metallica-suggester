@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import classnames from 'classnames';
 import { useDocumentAddEventListener } from '../commons-tools';
 
@@ -15,7 +15,6 @@ function SuggesterContainer({
 	const onClick = useCallback(
 		function (e) {
 			const { current } = ref;
-
 			if (!current.contains(e.target)) {
 				onBlur();
 			}
@@ -23,14 +22,14 @@ function SuggesterContainer({
 		[ref, onBlur]
 	);
 
-	useDocumentAddEventListener('click', onClick);
+	useDocumentAddEventListener('mousedown', onClick);
 
 	return (
 		<div
 			className={classnames('lunatic-suggester', className, {
 				focused,
 			})}
-			tabIndex="0"
+			tabIndex="-1"
 			onFocus={onFocus}
 			onKeyDown={onKeyDown}
 			ref={ref}

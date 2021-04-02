@@ -44,7 +44,6 @@ function reduceEnter(state) {
 }
 
 function reduceEscape(state) {
-	const { expended } = state;
 	return { ...state, expended: false };
 }
 

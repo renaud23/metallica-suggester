@@ -4,9 +4,9 @@ import { BINDED_KEYS } from '../commons-tools';
 function create(dispatch) {
 	return function (e) {
 		const { key } = e;
-
 		switch (key) {
 			case BINDED_KEYS.Tab:
+				e.stopPropagation();
 				dispatch(actions.onKeyDown(key));
 				break;
 			case BINDED_KEYS.ArrowDown:
