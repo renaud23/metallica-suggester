@@ -1,0 +1,36 @@
+.custom-theme {
+	&.lunatic-suggester {
+		min-height: 30px;
+		width: 650px;
+		.lunatic-suggester-container {
+			/* */
+			border-radius: 5px;
+			border: solid 1px gray;
+
+			&.focused {
+				box-shadow: 0 2px 2px grey;
+			}
+			background-color: snow;
+			/* */
+			.lunatic-suggester-selection {
+				.lunatic-suggester-input {
+					height: 30px;
+					line-height: 30px;
+				}
+			}
+
+			/* */
+			.lunatic-suggester-panel {
+				height: 0px;
+				opacity: 0;
+
+				&.focused {
+					opacity: 1;
+					height: max-content;
+					max-height: 300px;
+					overflow-y: scroll;
+				}
+			}
+		}
+	}
+}

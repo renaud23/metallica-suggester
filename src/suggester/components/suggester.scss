@@ -1,7 +1,13 @@
+@mixin preventSelect() {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+}
+
 .lunatic-suggester {
 	position: relative;
-	min-height: 30px;
-	width: 450px;
+	// min-height: 30px;
+	// width: 450px;
 	z-index: 0;
 
 	&:focus {
@@ -16,16 +22,6 @@
 		position: absolute;
 		width: 100%;
 		overflow: hidden;
-		position: absolute;
-
-		/* */
-		border: solid 1px gray;
-
-		&.focused {
-			box-shadow: 0 2px 2px grey;
-		}
-		background-color: snow;
-		/* */
 
 		.lunatic-suggester-selection {
 			.lunatic-suggester-input {
@@ -63,6 +59,7 @@
 			.lunatic-suggester-option {
 				white-space: nowrap;
 				overflow-y: hidden;
+				@include preventSelect();
 			}
 		}
 	}

@@ -13,6 +13,7 @@ import {
 import { serverMock } from './common-tools';
 import fetchCOG from './common-tools/fetch-cog';
 import fetchNafRev2 from './common-tools/fetch-naf-rev2';
+import './custom-themes.scss';
 
 const STORES = [
 	{ ...storeCog, version: '1', href: '/cog/communes?page=1&size=1000' },
@@ -79,6 +80,7 @@ export function AllInOne() {
 				<>
 					<div>COG :</div>
 					<Suggester
+						className="custom-theme"
 						storeName={storeCogName}
 						version="1"
 						optionRenderer={OptionCogRenderer}
