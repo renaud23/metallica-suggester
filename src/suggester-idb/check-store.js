@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { openDb } from '../commons-idb';
+import { openDb, CONSTANTES, getEntity } from '../commons-idb';
 
-function CheckStore({ storeName, version, children }) {
+function CheckStore({ storeName, version, setStore, children }) {
 	const [ready, setReady] = useState(0);
+
 	useEffect(
 		function () {
 			async function init() {
 				try {
-					const store = await openDb(storeName, version);
-					if (store) {
+					const db = await openDb(storeName, version);
+					const info = await getEntity(
+						db,
+						CONSTANTES.STORE_INFO_NAME,
+						storeName
+					);
+
+					if (db && info) {
 						setReady(200);
+						setStore(info);
 					}
 				} catch (e) {
 					setReady(400);

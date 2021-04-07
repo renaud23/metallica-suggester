@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Suggester from '../suggester';
 import { searching } from '../searching';
@@ -11,26 +11,33 @@ function createSearching(storeName, version, language) {
 }
 
 function SuggesterIDB({
-	className,
 	storeName,
 	version,
+	className,
 	labelledBy,
 	optionRenderer,
-	language,
+	labelRenderer,
 	onSelect,
 	onChange,
 }) {
-	const cally = useMemo(() => createSearching(storeName, version, language), [
-		storeName,
-		version,
-		language,
-	]);
+	const [store, setStore] = useState(undefined);
+	const cally = useMemo(
+		function () {
+			if (store) {
+				return createSearching(storeName, version);
+			}
+			return () => [];
+		},
+		[storeName, version, store]
+	);
+
 	return (
-		<CheckStore storeName={storeName} version={version}>
+		<CheckStore storeName={storeName} version={version} setStore={setStore}>
 			<Suggester
 				className={className}
 				labelledBy={labelledBy}
 				optionRenderer={optionRenderer}
+				labelRenderer={labelRenderer}
 				onSelect={onSelect}
 				onChange={onChange}
 				searching={cally}
@@ -40,12 +47,12 @@ function SuggesterIDB({
 }
 
 SuggesterIDB.propTypes = {
-	className: PropTypes.string,
 	storeName: PropTypes.string.isRequired,
 	version: PropTypes.string.isRequired,
+	className: PropTypes.string,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
-	language: PropTypes.string,
+	labelRenderer: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
 };
