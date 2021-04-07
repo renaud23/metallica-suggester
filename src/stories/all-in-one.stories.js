@@ -16,8 +16,8 @@ import fetchNafRev2 from './common-tools/fetch-naf-rev2';
 import './custom-themes.scss';
 
 const STORES = [
-	{ ...storeCog, version: '1', href: '/cog/communes?page=1&size=1000' },
-	{ ...storeNaf, version: '1', href: '/naf-rev2?page=1&size=500' },
+	{ ...storeCog, href: '/cog/communes?page=1&size=1000' },
+	{ ...storeNaf, href: '/naf-rev2?page=1&size=500' },
 ];
 
 const { name: storeCogName } = storeCog;
@@ -29,12 +29,8 @@ function useCreateStores(stores = []) {
 	useEffect(
 		function () {
 			async function init() {
-				const load = stores.map(async function ({
-					name,
-					version,
-					queryParser,
-				}) {
-					return await createStore(name, version, queryParser);
+				const load = stores.map(async function (store) {
+					return await createStore(store, '1');
 				});
 				setDbs(await Promise.all(load));
 			}

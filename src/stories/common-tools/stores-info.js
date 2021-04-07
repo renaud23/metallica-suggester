@@ -6,6 +6,8 @@ export const storeCog = {
 		{ name: 'com', rules: 'soft' },
 	],
 	queryParser: { type: 'soft' },
+	version: '1',
+	display: 'libelle',
 };
 
 export const storeNaf = {
@@ -18,4 +20,6 @@ export const storeNaf = {
 		type: 'tokenized',
 		params: { language: 'French', pattern: /[\w.]+/ },
 	},
+	version: '1',
+	display: 'libelle',
 };

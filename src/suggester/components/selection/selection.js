@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { SuggesterContext, actions } from '../../state-management';
+import Label from './label';
 
 function Selection(_, ref) {
 	const [state, dispatch] = useContext(SuggesterContext);
@@ -14,12 +15,13 @@ function Selection(_, ref) {
 			<input
 				tabIndex="0"
 				className="lunatic-suggester-input"
-				type="text"
+				type="search"
 				onChange={onChange}
 				value={search}
 				ref={ref}
 				placeholder="Veuillez..."
 			/>
+			<Label />
 		</div>
 	);
 }
