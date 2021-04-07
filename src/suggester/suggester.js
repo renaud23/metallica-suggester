@@ -7,7 +7,7 @@ import {
 	actions,
 } from './state-management';
 import { Suggester } from './components';
-// import { searching } from '../searching';
+import DefaultLabelRenderer from './components/selection/defaul-label-renderer';
 import { DefaultOptionRenderer } from './components';
 
 function isValideSearch(search) {
@@ -26,6 +26,7 @@ function LunaticSuggester({
 	onSelect,
 	onChange,
 	searching,
+	labelRenderer,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search, selectedIndex, options } = state;
@@ -64,6 +65,7 @@ function LunaticSuggester({
 				version={version}
 				labelledBy={labelledBy}
 				optionRenderer={optionRenderer}
+				labelRenderer={labelRenderer}
 			/>
 		</SuggesterContext.Provider>
 	);
@@ -73,6 +75,7 @@ LunaticSuggester.propTypes = {
 	className: PropTypes.string,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
+	labelRenderer: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
 };
@@ -81,6 +84,7 @@ LunaticSuggester.defaultProps = {
 	className: undefined,
 	labelledBy: undefined,
 	optionRenderer: DefaultOptionRenderer,
+	labelRenderer: DefaultLabelRenderer,
 	language: 'French',
 	onSelect: () => null,
 	onChange: () => null,

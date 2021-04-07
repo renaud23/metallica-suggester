@@ -6,7 +6,7 @@ import Panel from './panel';
 import createOnKeyDownCallback from './create-on-keydown-callback';
 import './suggester.scss';
 
-function Suggester({ className, labelledBy, optionRenderer }) {
+function Suggester({ className, labelledBy, optionRenderer, labelRenderer }) {
 	const inputRef = useRef();
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { focused } = state;
@@ -36,7 +36,7 @@ function Suggester({ className, labelledBy, optionRenderer }) {
 			onBlur={onBlur}
 			onKeyDown={onKeyDown}
 		>
-			<Selection ref={inputRef} />
+			<Selection ref={inputRef} labelRenderer={labelRenderer} />
 			<Panel optionRenderer={optionRenderer} />
 		</SuggesterContainer>
 	);

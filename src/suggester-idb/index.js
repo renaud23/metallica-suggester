@@ -4,10 +4,6 @@ import Suggester from '../suggester';
 import { searching } from '../searching';
 import CheckStore from './check-store';
 
-// <CheckStore storeName={storeName} version={version}>
-
-// const results = await searching(search, storeName, version, language);
-
 function createSearching(storeName, version, language) {
 	return async function (search) {
 		return searching(search, storeName, version, language);

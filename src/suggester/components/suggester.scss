@@ -47,6 +47,14 @@
 				white-space: nowrap;
 				overflow-x: hidden;
 				width: 100%;
+
+				.lunatic-suggester-default-etiquette-renderer {
+					.search {
+						color: brown;
+					}
+					.id {
+					}
+				}
 			}
 		}
 
