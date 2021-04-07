@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createStore } from '../store-index';
 import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
-import Suggester from '../suggester';
+import Suggester from '../suggester-idb';
 import {
 	storeCog,
 	storeNaf,

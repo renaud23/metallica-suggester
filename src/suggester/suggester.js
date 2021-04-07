@@ -7,7 +7,7 @@ import {
 	actions,
 } from './state-management';
 import { Suggester } from './components';
-import { searching } from '../searching';
+// import { searching } from '../searching';
 import { DefaultOptionRenderer } from './components';
 
 function isValideSearch(search) {
@@ -23,9 +23,9 @@ function LunaticSuggester({
 	version,
 	labelledBy,
 	optionRenderer,
-	language,
 	onSelect,
 	onChange,
+	searching,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search, selectedIndex, options } = state;
@@ -33,7 +33,7 @@ function LunaticSuggester({
 	useEffect(
 		function () {
 			async function doIt() {
-				const results = await searching(search, storeName, version, language);
+				const results = await searching(search);
 				dispatch(actions.onUpdateOptions(results));
 				onChange(results, search);
 			}
@@ -44,7 +44,7 @@ function LunaticSuggester({
 				onChange([], search);
 			}
 		},
-		[search, storeName, version, language, onChange]
+		[search, onChange, searching]
 	);
 
 	useEffect(
@@ -71,11 +71,8 @@ function LunaticSuggester({
 
 LunaticSuggester.propTypes = {
 	className: PropTypes.string,
-	storeName: PropTypes.string.isRequired,
-	version: PropTypes.string.isRequired,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
-	language: PropTypes.string,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
 };

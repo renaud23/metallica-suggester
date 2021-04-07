@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { openDb } from '../../commons-idb';
+import { openDb } from '../commons-idb';
 
 function CheckStore({ storeName, version, children }) {
 	const [ready, setReady] = useState(0);

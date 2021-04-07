@@ -24,6 +24,7 @@
 		overflow: hidden;
 
 		.lunatic-suggester-selection {
+			position: relative;
 			.lunatic-suggester-input {
 				border: none;
 				margin: 0;
@@ -38,6 +39,14 @@
 				line-height: 30px;
 				width: 100%;
 				/* */
+			}
+
+			.lunatic-suggester-etiquette {
+				position: absolute;
+				top: 0;
+				white-space: nowrap;
+				overflow-x: hidden;
+				width: 100%;
 			}
 		}
 

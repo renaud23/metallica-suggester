@@ -3,6 +3,7 @@ const INITIAL = {
 	options: [],
 	focused: false,
 	expended: false,
+	displayLabel: true,
 	selectedIndex: undefined,
 };
 
