@@ -1,5 +1,5 @@
 import React from 'react';
-import Suggester from '../suggester';
+import Suggester from '../suggester-idb';
 import {
 	OptionCogRenderer,
 	OptionNafRenderer,

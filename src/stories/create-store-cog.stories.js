@@ -6,7 +6,7 @@ import fetchCOG from './common-tools/fetch-cog';
 import { storeCog, useCreateStore, Loader } from './common-tools';
 
 const { name } = storeCog;
-const STORE = { ...storeCog, version: '1', href: '/cog/communes' };
+const STORE = { ...storeCog, href: '/cog/communes' };
 
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
