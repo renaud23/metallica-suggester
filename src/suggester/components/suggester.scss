@@ -41,19 +41,19 @@
 				/* */
 			}
 
-			.lunatic-suggester-etiquette {
+			.lunatic-suggester-selection {
 				position: absolute;
 				top: 0;
 				white-space: nowrap;
 				overflow-x: hidden;
 				width: 100%;
+				height: 100%;
+				background-color: snow;
 
-				.lunatic-suggester-default-etiquette-renderer {
-					.search {
-						color: brown;
+				.lunatic-suggester-default-selection-renderer {
+					.placeholder {
 					}
-					.id {
-						margin-left: 5px;
+					.selection {
 					}
 				}
 			}

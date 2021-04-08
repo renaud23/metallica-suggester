@@ -23,6 +23,7 @@ function LunaticSuggester({
 	storeName,
 	version,
 	labelledBy,
+	placeholder,
 	optionRenderer,
 	onSelect,
 	onChange,
@@ -69,6 +70,7 @@ function LunaticSuggester({
 		<SuggesterContext.Provider value={[state, dispatch]}>
 			<Suggester
 				className={className}
+				placeholder={placeholder}
 				storeName={storeName}
 				version={version}
 				labelledBy={labelledBy}
@@ -82,6 +84,7 @@ function LunaticSuggester({
 LunaticSuggester.propTypes = {
 	id: PropTypes.string,
 	className: PropTypes.string,
+	placeholder: PropTypes.string,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
 	labelRenderer: PropTypes.func,
@@ -93,6 +96,7 @@ LunaticSuggester.defaultProps = {
 	id: undefined,
 	className: undefined,
 	labelledBy: undefined,
+	placeholder: 'Veuillez...',
 	optionRenderer: DefaultOptionRenderer,
 	labelRenderer: DefaultLabelRenderer,
 	language: 'French',

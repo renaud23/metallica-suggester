@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { SuggesterContext, actions } from '../../state-management';
 import Label from './label';
 
-function Selection({ labelRenderer }, ref) {
+function Selection({ labelRenderer, placeholder }, ref) {
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { search, expended, id } = state;
 
@@ -28,9 +28,9 @@ function Selection({ labelRenderer }, ref) {
 				autoCapitalize="off"
 				autoCorrect="off"
 				spellCheck="false"
-				placeholder="Veuillez..."
+				placeholder={placeholder}
 			/>
-			<Label labelRenderer={labelRenderer} />
+			<Label labelRenderer={labelRenderer} placeholder={placeholder} />
 		</div>
 	);
 }

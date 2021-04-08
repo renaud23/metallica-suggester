@@ -2,7 +2,10 @@ import React, { useContext } from 'react';
 import { SuggesterContext } from '../../state-management';
 import DefaultLabelRenderer from './defaul-label-renderer';
 
-function Label({ labelRenderer: Renderer = DefaultLabelRenderer }) {
+function Label({
+	labelRenderer: Renderer = DefaultLabelRenderer,
+	placeholder,
+}) {
 	const [state] = useContext(SuggesterContext);
 	const { displayLabel, expended, selectedIndex, options, search } = state;
 	if (displayLabel || !expended) {
@@ -10,12 +13,8 @@ function Label({ labelRenderer: Renderer = DefaultLabelRenderer }) {
 			selectedIndex !== undefined ? options[selectedIndex] : undefined;
 
 		return (
-			<div className="lunatic-suggester-etiquette">
-				<Renderer
-					option={option}
-					placeholder="placeholder todo..."
-					search={search}
-				/>
+			<div className="lunatic-suggester-selection">
+				<Renderer option={option} placeholder={placeholder} search={search} />
 			</div>
 		);
 	}

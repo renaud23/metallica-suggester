@@ -16,11 +16,7 @@ function getContent(option, search) {
 function DefaultLabelRenderer({ option, placeholder, search }) {
 	const content = getContent(option, search);
 	if (content) {
-		return (
-			<div className="lunatic-suggester-default-etiquette-renderer">
-				{content}
-			</div>
-		);
+		return <span className="selection">{content}</span>;
 	}
 	return <span className="placeholder">{placeholder}</span>;
 }
