@@ -26,7 +26,7 @@ function CheckStore({ storeName, version, setStore, children }) {
 
 			init();
 		},
-		[storeName, version]
+		[storeName, version, setStore]
 	);
 	if (ready === 0) {
 		return (

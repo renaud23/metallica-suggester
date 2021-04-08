@@ -1,6 +1,8 @@
 import CreateSearchWorker from './searching.worker';
 import searching from './searching';
 
+let WORKER = undefined;
+
 export function isWorkerCompatible() {
 	if (window.Worker) {
 		return true;
@@ -11,9 +13,12 @@ export function isWorkerCompatible() {
 function create(searh, name, version) {
 	if (isWorkerCompatible()) {
 		return new Promise(function (resolve) {
-			const worker = new CreateSearchWorker();
-			worker.postMessage({ searh, name, version });
-			worker.addEventListener('message', function (e) {
+			if (WORKER) {
+				WORKER.terminate();
+			}
+			WORKER = new CreateSearchWorker();
+			WORKER.postMessage({ searh, name, version });
+			WORKER.addEventListener('message', function (e) {
 				const { data } = e;
 				resolve(data);
 			});
