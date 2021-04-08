@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function DefaultLabelRenderer({ option, placeholder, search }) {
+function getContent(option, search) {
 	if (option) {
 		const { id } = option;
+
+		return id;
+	}
+	if (search && search.trim().length) {
+		return search;
+	}
+	return undefined;
+}
+
+function DefaultLabelRenderer({ option, placeholder, search }) {
+	const content = getContent(option, search);
+	if (content) {
 		return (
 			<div className="lunatic-suggester-default-etiquette-renderer">
-				<span className="search">{id}</span>
+				{content}
 			</div>
 		);
 	}
