@@ -6,7 +6,9 @@ function PanelContainer({ children, focused, id }) {
 		<ul
 			id={id}
 			tabIndex="-1"
-			className={classnames('lunatic-suggester-panel', { focused })}
+			className={classnames('lunatic-suggester-panel', {
+				focused,
+			})}
 			role="listbox"
 		>
 			{children}

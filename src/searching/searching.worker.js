@@ -3,8 +3,8 @@ import 'core-js/stable';
 import searching from './searching';
 
 self.onmessage = async function (e) {
-	const { searh, storeName, version } = e.data;
-	const result = await searching(searh, storeName, version);
+	const { searh, name, version } = e.data;
+	const result = await searching(searh, name, version);
 
 	self.postMessage(result);
 };

@@ -43,6 +43,10 @@
 				overflow-x: hidden;
 				width: 100%;
 				height: 100%;
+				display: none;
+				&.displayed {
+					display: block;
+				}
 
 				.placeholder {
 				}

@@ -17,25 +17,34 @@ async function searchTokens(tokens, index) {
 	}, {});
 }
 
+function isValideSearch(search) {
+	if (typeof search === 'string' && search.trim().length) {
+		return true;
+	}
+	return false;
+}
+
 async function searching(search, name, version) {
 	const max = 30;
 	try {
-		const db = await getDb(name, version);
-		const parser = await resolveQueryParser(db, name);
-		const transaction = db.transaction(CONSTANTES.STORE_DATA_NAME, 'readonly');
-		const store = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
-		const index = store.index(CONSTANTES.STORE_INDEX_NAME);
-		const tokens = parser(search);
-		if (tokens && tokens.length) {
+		if (isValideSearch(search)) {
+			const db = await getDb(name, version);
+			const parser = await resolveQueryParser(db, name);
+			const transaction = db.transaction(
+				CONSTANTES.STORE_DATA_NAME,
+				'readonly'
+			);
+			const store = transaction.objectStore(CONSTANTES.STORE_DATA_NAME);
+			const index = store.index(CONSTANTES.STORE_INDEX_NAME);
+			const tokens = parser(search);
 			const tokensSuggestions = await searchTokens(tokens, index);
 			const resultat = computeScore(tokensSuggestions);
 			if (max && max < resultat.length) {
 				return prepare(resultat.slice(0, max));
 			}
-
-			return prepare(resultat);
+			return { results: prepare(resultat), search };
 		}
-		return [];
+		return { results: [], search };
 	} catch (e) {
 		throw e;
 	}

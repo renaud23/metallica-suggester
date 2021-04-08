@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import classnames from 'classnames';
 import { SuggesterContext } from '../../state-management';
 import DefaultLabelRenderer from './defaul-label-renderer';
 
@@ -8,17 +9,20 @@ function Label({
 }) {
 	const [state] = useContext(SuggesterContext);
 	const { displayLabel, expended, selectedIndex, options, search } = state;
-	if (displayLabel || !expended) {
-		const option =
-			selectedIndex !== undefined ? options[selectedIndex] : undefined;
+	const displayed = displayLabel || !expended;
 
-		return (
-			<div className="lunatic-suggester-selected">
-				<Renderer option={option} placeholder={placeholder} search={search} />
-			</div>
-		);
-	}
-	return null;
+	const option =
+		selectedIndex !== undefined ? options[selectedIndex] : undefined;
+
+	return (
+		<div
+			className={classnames('lunatic-suggester-selected', { displayed })}
+			onClick={() => console.log('ici')}
+			tabIndex="-1"
+		>
+			<Renderer option={option} placeholder={placeholder} search={search} />
+		</div>
+	);
 }
 
 export default Label;

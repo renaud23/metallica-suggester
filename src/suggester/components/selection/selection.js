@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { SuggesterContext, actions } from '../../state-management';
 import Label from './label';
 
-function Selection({ labelRenderer, placeholder }, ref) {
+function Selection({ labelRenderer, placeholder }, inputEl) {
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { search, expended, id } = state;
 
@@ -13,13 +13,13 @@ function Selection({ labelRenderer, placeholder }, ref) {
 	return (
 		<div className="lunatic-suggester-selection">
 			<input
+				ref={inputEl}
 				id={`${id}-input`}
 				tabIndex="0"
 				className="lunatic-suggester-input"
 				type="text"
 				onChange={onChange}
 				value={search}
-				ref={ref}
 				role="combobox"
 				aria-expanded={expended}
 				aria-autocomplete="list"

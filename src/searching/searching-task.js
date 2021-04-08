@@ -8,18 +8,18 @@ export function isWorkerCompatible() {
 	return false;
 }
 
-function create(searh, storeName, version) {
+function create(searh, name, version) {
 	if (isWorkerCompatible()) {
 		return new Promise(function (resolve) {
 			const worker = new CreateSearchWorker();
-			worker.postMessage({ searh, storeName, version });
+			worker.postMessage({ searh, name, version });
 			worker.addEventListener('message', function (e) {
 				const { data } = e;
 				resolve(data);
 			});
 		});
 	} else {
-		return Promise.resolve(searching(searh, storeName, version));
+		return Promise.resolve(searching(searh, name, version));
 	}
 }
 

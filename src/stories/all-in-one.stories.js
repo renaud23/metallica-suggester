@@ -46,7 +46,7 @@ function CustomLabelCog({ option, search, placeholder }) {
 		const { com, libelle } = option;
 		return `${libelle} - ${com}`;
 	}
-	return search || placeholder;
+	return search || <span className="placeholder">{placeholder}</span>;
 }
 
 export function AllInOne() {

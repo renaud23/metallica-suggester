@@ -10,13 +10,6 @@ import { Suggester } from './components';
 import DefaultLabelRenderer from './components/selection/defaul-label-renderer';
 import { DefaultOptionRenderer } from './components';
 
-function isValideSearch(search) {
-	if (typeof search === 'string' && search.trim().length) {
-		return true;
-	}
-	return false;
-}
-
 function LunaticSuggester({
 	id,
 	className,
@@ -36,16 +29,11 @@ function LunaticSuggester({
 	useEffect(
 		function () {
 			async function doIt() {
-				const results = await searching(search);
-				dispatch(actions.onUpdateOptions(results));
-				onChange(results, search);
+				const { results, search: old } = await searching(search);
+				dispatch(actions.onUpdateOptions(results, old));
+				onChange(results, old);
 			}
-			if (isValideSearch(search)) {
-				doIt();
-			} else {
-				dispatch(actions.onUpdateOptions([]));
-				onChange([], search);
-			}
+			doIt();
 		},
 		[search, onChange, searching]
 	);

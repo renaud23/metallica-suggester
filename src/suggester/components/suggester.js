@@ -13,12 +13,13 @@ function Suggester({
 	optionRenderer,
 	labelRenderer,
 }) {
-	const inputRef = useRef();
+	const inputEl = useRef();
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { focused, id } = state;
 
 	const onFocus = useCallback(
 		function () {
+			inputEl.current.focus();
 			dispatch(actions.onFocus());
 		},
 		[dispatch]
@@ -44,9 +45,9 @@ function Suggester({
 			onKeyDown={onKeyDown}
 		>
 			<Selection
-				ref={inputRef}
 				labelRenderer={labelRenderer}
 				placeholder={placeholder}
+				ref={inputEl}
 			/>
 			<Panel optionRenderer={optionRenderer} />
 		</SuggesterContainer>

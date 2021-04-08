@@ -57,13 +57,11 @@
 
 			/* */
 			.lunatic-suggester-panel {
-				height: 0px;
+				height: 0;
 				opacity: 0;
-
 				&.focused {
 					opacity: 1;
 					height: max-content;
-					max-height: 300px;
 					overflow-y: scroll;
 				}
 			}

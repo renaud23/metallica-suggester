@@ -8,9 +8,9 @@ export const onChangeSearch = (search) => ({
 });
 
 export const ON_UPDATE_OPTIONS = 'lunatic-suggester/on-update-options';
-export const onUpdateOptions = (options) => ({
+export const onUpdateOptions = (options, search) => ({
 	type: ON_UPDATE_OPTIONS,
-	payload: { options },
+	payload: { options, search },
 });
 
 export const ON_FOCUS = 'lunatic-suggester/on-focus';
