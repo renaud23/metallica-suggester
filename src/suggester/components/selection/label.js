@@ -13,7 +13,7 @@ function Label({
 			selectedIndex !== undefined ? options[selectedIndex] : undefined;
 
 		return (
-			<div className="lunatic-suggester-selection">
+			<div className="lunatic-suggester-selected">
 				<Renderer option={option} placeholder={placeholder} search={search} />
 			</div>
 		);

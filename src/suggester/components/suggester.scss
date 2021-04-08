@@ -6,8 +6,6 @@
 
 .lunatic-suggester {
 	position: relative;
-	// min-height: 30px;
-	// width: 450px;
 	z-index: 0;
 
 	&:focus {
@@ -34,27 +32,21 @@
 					outline: none;
 				}
 
-				/* */
-				height: 30px;
-				line-height: 30px;
 				width: 100%;
 				/* */
 			}
 
-			.lunatic-suggester-selection {
+			.lunatic-suggester-selected {
 				position: absolute;
 				top: 0;
 				white-space: nowrap;
 				overflow-x: hidden;
 				width: 100%;
 				height: 100%;
-				background-color: snow;
 
-				.lunatic-suggester-default-selection-renderer {
-					.placeholder {
-					}
-					.selection {
-					}
+				.placeholder {
+				}
+				.selection {
 				}
 			}
 		}
