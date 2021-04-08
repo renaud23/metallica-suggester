@@ -9,7 +9,7 @@ import './suggester.scss';
 function Suggester({ className, labelledBy, optionRenderer, labelRenderer }) {
 	const inputRef = useRef();
 	const [state, dispatch] = useContext(SuggesterContext);
-	const { focused } = state;
+	const { focused, id } = state;
 
 	const onFocus = useCallback(
 		function () {
@@ -30,6 +30,7 @@ function Suggester({ className, labelledBy, optionRenderer, labelRenderer }) {
 	const onKeyDown = createOnKeyDownCallback(dispatch);
 	return (
 		<SuggesterContainer
+			id={id}
 			className={className}
 			focused={focused}
 			onFocus={onFocus}

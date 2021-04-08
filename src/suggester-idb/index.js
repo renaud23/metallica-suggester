@@ -13,6 +13,7 @@ function createSearching(storeName, version, language) {
 function SuggesterIDB({
 	storeName,
 	version,
+	id,
 	className,
 	labelledBy,
 	optionRenderer,
@@ -34,6 +35,7 @@ function SuggesterIDB({
 	return (
 		<CheckStore storeName={storeName} version={version} setStore={setStore}>
 			<Suggester
+				id={id}
 				className={className}
 				labelledBy={labelledBy}
 				optionRenderer={optionRenderer}
@@ -49,6 +51,7 @@ function SuggesterIDB({
 SuggesterIDB.propTypes = {
 	storeName: PropTypes.string.isRequired,
 	version: PropTypes.string.isRequired,
+	id: PropTypes.string,
 	className: PropTypes.string,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,

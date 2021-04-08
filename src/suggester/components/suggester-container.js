@@ -4,6 +4,7 @@ import { useDocumentAddEventListener } from '../commons-tools';
 
 function SuggesterContainer({
 	children,
+	id,
 	className,
 	focused,
 	onFocus,
@@ -26,6 +27,7 @@ function SuggesterContainer({
 
 	return (
 		<div
+			id={id}
 			className={classnames('lunatic-suggester', className, {
 				focused,
 			})}

@@ -18,6 +18,7 @@ function isValideSearch(search) {
 }
 
 function LunaticSuggester({
+	id,
 	className,
 	storeName,
 	version,
@@ -57,6 +58,13 @@ function LunaticSuggester({
 		[selectedIndex, onSelect, options]
 	);
 
+	useEffect(
+		function () {
+			dispatch(actions.onInit(id));
+		},
+		[id]
+	);
+
 	return (
 		<SuggesterContext.Provider value={[state, dispatch]}>
 			<Suggester
@@ -72,6 +80,7 @@ function LunaticSuggester({
 }
 
 LunaticSuggester.propTypes = {
+	id: PropTypes.string,
 	className: PropTypes.string,
 	labelledBy: PropTypes.string,
 	optionRenderer: PropTypes.func,
@@ -81,6 +90,7 @@ LunaticSuggester.propTypes = {
 };
 
 LunaticSuggester.defaultProps = {
+	id: undefined,
 	className: undefined,
 	labelledBy: undefined,
 	optionRenderer: DefaultOptionRenderer,

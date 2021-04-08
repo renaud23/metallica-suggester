@@ -4,7 +4,7 @@ import Label from './label';
 
 function Selection({ labelRenderer }, ref) {
 	const [state, dispatch] = useContext(SuggesterContext);
-	const { search } = state;
+	const { search, expended, id } = state;
 
 	function onChange(e) {
 		dispatch(actions.onChangeSearch(e.target.value));
@@ -13,12 +13,21 @@ function Selection({ labelRenderer }, ref) {
 	return (
 		<div className="lunatic-suggester-selection">
 			<input
+				id={`${id}-input`}
 				tabIndex="0"
 				className="lunatic-suggester-input"
-				type="search"
+				type="text"
 				onChange={onChange}
 				value={search}
 				ref={ref}
+				role="combobox"
+				aria-expanded={expended}
+				aria-autocomplete="list"
+				aria-controls={`${id}-list`}
+				autoComplete="off"
+				autoCapitalize="off"
+				autoCorrect="off"
+				spellCheck="false"
 				placeholder="Veuillez..."
 			/>
 			<Label labelRenderer={labelRenderer} />

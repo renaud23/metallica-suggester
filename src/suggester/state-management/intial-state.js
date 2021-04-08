@@ -1,4 +1,5 @@
 const INITIAL = {
+	id: '',
 	search: '',
 	options: [],
 	focused: false,

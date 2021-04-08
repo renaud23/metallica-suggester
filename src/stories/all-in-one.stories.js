@@ -41,6 +41,36 @@ function useCreateStores(stores = []) {
 	return dbs;
 }
 
+function Part({ libelle, search }) {
+	const index = libelle.indexOf(search.trim());
+	if (index !== -1) {
+		return (
+			<>
+				<span>{libelle.substring(0, index)}</span>
+				<span style={{ color: 'red' }}>
+					{libelle.substr(index, search.length)}
+				</span>
+				<span>{libelle.substr(index + search.length)}</span>
+			</>
+		);
+	}
+	return <span>{libelle}</span>;
+}
+
+function CustomLabelCog({ option, search, placeholder }) {
+	if (option) {
+		const { com, libelle } = option;
+
+		return (
+			<>
+				<Part libelle={libelle} search={search} />
+				<Part libelle={`${com}`} search={search} />
+			</>
+		);
+	}
+	return search || placeholder;
+}
+
 export function AllInOne() {
 	const [disabled, setDisabled] = useState(true);
 	const [start, setStart] = useState(false);
@@ -76,10 +106,12 @@ export function AllInOne() {
 				<>
 					<div>COG :</div>
 					<Suggester
+						id="suggest-communes"
 						className="custom-theme"
 						storeName={storeCogName}
 						version="1"
 						optionRenderer={OptionCogRenderer}
+						labelRenderer={CustomLabelCog}
 						onChange={(...args) => console.log(args)}
 						onSelect={(...args) => console.log(args)}
 					/>

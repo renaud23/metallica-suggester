@@ -21,10 +21,14 @@ function getContent(options, OptionRender, selectedIndex, expended) {
 
 function Panel({ optionRenderer: OptionRender }) {
 	const [state] = useContext(SuggesterContext);
-	const { options, focused, selectedIndex, expended } = state;
+	const { options, focused, selectedIndex, expended, id } = state;
 	const content = getContent(options, OptionRender, selectedIndex, expended);
 
-	return <PanelContainer focused={focused}>{content}</PanelContainer>;
+	return (
+		<PanelContainer focused={focused} id={`${id}-list`}>
+			{content}
+		</PanelContainer>
+	);
 }
 
 export default Panel;

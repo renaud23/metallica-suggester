@@ -6,16 +6,17 @@ function Label({ labelRenderer: Renderer = DefaultLabelRenderer }) {
 	const [state] = useContext(SuggesterContext);
 	const { displayLabel, expended, selectedIndex, options, search } = state;
 	if (displayLabel || !expended) {
-		if (selectedIndex !== undefined) {
-			const option = options[selectedIndex];
-			return (
-				<div className="lunatic-suggester-etiquette">
-					<Renderer option={option} selected={false} search={search} />
-				</div>
-			);
-		}
+		const option =
+			selectedIndex !== undefined ? options[selectedIndex] : undefined;
+
 		return (
-			<div className="lunatic-suggester-etiquette">Placehoder todo...</div>
+			<div className="lunatic-suggester-etiquette">
+				<Renderer
+					option={option}
+					placeholder="placeholder todo..."
+					search={search}
+				/>
+			</div>
 		);
 	}
 	return null;

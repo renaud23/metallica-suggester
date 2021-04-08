@@ -1,4 +1,7 @@
-export const ON_CHANGE_SEARCH = 'lunatic-suggester/on-change_search';
+export const ON_INIT = 'lunatic-suggester/on-init';
+export const onInit = (id) => ({ type: ON_INIT, payload: { id } });
+
+export const ON_CHANGE_SEARCH = 'lunatic-suggester/on-change-search';
 export const onChangeSearch = (search) => ({
 	type: ON_CHANGE_SEARCH,
 	payload: { search },
