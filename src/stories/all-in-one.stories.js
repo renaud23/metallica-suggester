@@ -83,7 +83,7 @@ export function AllInOne() {
 			{!disabled ? (
 				<>
 					<div>COG :</div>
-					<label id="label-suggester-cog" for="suggest-communes">
+					<label id="label-suggester-cog" htmlFor="suggest-communes">
 						Label for Suggester COG
 					</label>
 					<Suggester
