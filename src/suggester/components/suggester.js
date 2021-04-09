@@ -47,6 +47,7 @@ function Suggester({
 			<Selection
 				labelRenderer={labelRenderer}
 				placeholder={placeholder}
+				labelledBy={labelledBy}
 				ref={inputEl}
 			/>
 			<Panel optionRenderer={optionRenderer} />

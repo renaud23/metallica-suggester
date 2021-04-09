@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { SuggesterContext, actions } from '../../state-management';
 import Label from './label';
 
-function Selection({ labelRenderer, placeholder }, inputEl) {
+function Selection({ labelRenderer, placeholder, labelledBy }, inputEl) {
 	const [state, dispatch] = useContext(SuggesterContext);
 	const { search, expended, id } = state;
 
@@ -24,6 +24,7 @@ function Selection({ labelRenderer, placeholder }, inputEl) {
 				aria-expanded={expended}
 				aria-autocomplete="list"
 				aria-controls={`${id}-list`}
+				aria-labelledby={labelledBy}
 				autoComplete="off"
 				autoCapitalize="off"
 				autoCorrect="off"

@@ -83,8 +83,12 @@ export function AllInOne() {
 			{!disabled ? (
 				<>
 					<div>COG :</div>
+					<label id="label-suggester-cog" for="suggest-communes">
+						Label for Suggester COG
+					</label>
 					<Suggester
 						id="suggest-communes"
+						labelledBy="label-suggester-cog"
 						className="custom-theme"
 						storeName={storeCogName}
 						version="1"
