@@ -1,7 +1,6 @@
 {
 	"name": "lunatic-suggester",
 	"version": "v0.1.0",
-	"private": true,
 	"files": [
 		"src",
 		"release"
