@@ -2,9 +2,11 @@
 	"name": "lunatic-suggester",
 	"version": "0.1.0",
 	"private": true,
+	"files": [
+		"src",
+		"release"
+	],
 	"dependencies": {
-		"@material-ui/core": "^4.11.3",
-		"@material-ui/icons": "^4.11.2",
 		"classnames": "^2.2.6",
 		"damerau-levenshtein": "^1.0.6",
 		"prop-types": "^15.7.2",
@@ -14,14 +16,12 @@
 		"remove-accents": "^0.4.2",
 		"snowball": "^0.3.1",
 		"string-tokenizer": "^0.0.8",
-		"web-vitals": "^1.0.1",
-		"worker-loader": "^3.0.8"
+		"web-vitals": "^1.0.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
+		"build": "webpack",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject",
 		"storybook": "start-storybook -p 6006 -s public",
 		"build-storybook": "build-storybook -s public"
 	},
@@ -44,15 +44,17 @@
 		]
 	},
 	"devDependencies": {
-		"@testing-library/jest-dom": "^5.11.4",
-		"@testing-library/react": "^11.1.0",
-		"@testing-library/user-event": "^12.1.10",
+		"@material-ui/core": "^4.11.3",
+		"@material-ui/icons": "^4.11.2",
 		"@storybook/addon-actions": "^6.2.3",
 		"@storybook/addon-essentials": "^6.2.3",
 		"@storybook/addon-links": "^6.2.3",
 		"@storybook/node-logger": "^6.2.3",
 		"@storybook/preset-create-react-app": "^3.1.7",
 		"@storybook/react": "^6.2.3",
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.1.10",
 		"babel-eslint": "^10.1.0",
 		"eslint": "^7.21.0",
 		"eslint-config-prettier": "^8.1.0",
@@ -69,7 +71,11 @@
 		"node-sass": "^5.0.0",
 		"object-sizeof": "^1.6.1",
 		"parse-url": "^5.0.2",
-		"prettier": "^2.2.1"
+		"prettier": "^2.2.1",
+		"sass-loader": "^10.0.0",
+		"webpack": "4",
+		"webpack-cli": "^4.6.0",
+		"worker-loader": "^3.0.8"
 	},
 	"prettier": {
 		"singleQuote": true,
