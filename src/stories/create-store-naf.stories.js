@@ -3,7 +3,8 @@ import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import { serverMock } from './common-tools';
 import fetchNafRev2 from './common-tools/fetch-naf-rev2';
-import { storeNaf, useCreateStore, Loader } from './common-tools';
+import { storeNaf, Loader } from './common-tools';
+import { useStoreIndex } from '../store-index';
 
 const { name } = storeNaf;
 const STORE = { ...storeNaf, version: '1', href: '/naf-rev2' };
@@ -11,7 +12,7 @@ const STORE = { ...storeNaf, version: '1', href: '/naf-rev2' };
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
 	const [start, setStart] = useState(false);
-	const db = useCreateStore(STORE);
+	const db = useStoreIndex(STORE, '1');
 
 	useEffect(
 		function () {

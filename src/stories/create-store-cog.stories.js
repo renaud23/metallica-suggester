@@ -3,7 +3,8 @@ import Fab from '@material-ui/core/Fab';
 import Loop from '@material-ui/icons/Loop';
 import { serverMock } from './common-tools';
 import fetchCOG from './common-tools/fetch-cog';
-import { storeCog, useCreateStore, Loader } from './common-tools';
+import { storeCog, Loader } from './common-tools';
+import { useStoreIndex } from '../store-index';
 
 const { name } = storeCog;
 const STORE = { ...storeCog, href: '/cog/communes' };
@@ -11,7 +12,7 @@ const STORE = { ...storeCog, href: '/cog/communes' };
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
 	const [start, setStart] = useState(false);
-	const db = useCreateStore(STORE);
+	const db = useStoreIndex(STORE, '1');
 
 	useEffect(
 		function () {

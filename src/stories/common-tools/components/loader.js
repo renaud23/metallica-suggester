@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { createAppendTask } from '../../../store-index';
-import { clearDb, CONSTANTES } from '../../../commons-idb';
+import { createAppendTask, clearData } from '../../../store-index';
 import Progress from './progress';
 import browsePages from '../browse-pages';
 
@@ -32,7 +31,7 @@ function Loader({ start, db, store }) {
 			async function go() {
 				try {
 					if (start) {
-						clearDb(db, CONSTANTES.STORE_DATA_NAME);
+						clearData(db);
 						const { href } = store;
 						await browsePages(href, indexPage, store);
 					}

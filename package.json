@@ -1,6 +1,13 @@
 {
 	"name": "lunatic-suggester",
-	"version": "v0.1.0",
+	"version": "v0.1.1",
+	"license": "MIT",
+	"author": "renaud.genevois",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/renaud23/metallica-suggester"
+	},
+	"main": "./release/index.js",
 	"files": [
 		"src",
 		"release"
