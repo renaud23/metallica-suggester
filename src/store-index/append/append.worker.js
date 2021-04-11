@@ -2,13 +2,14 @@
 import 'core-js/stable';
 import append from './append';
 
-self.onmessage = async function (e) {
+self.onmessage = function (e) {
 	function log(message) {
 		self.postMessage(message);
 	}
 	const { name, version, fields, entities } = e.data;
-	await append(name, version, fields, entities, log);
-	self.postMessage('success');
+	append(name, version, fields, entities, log).then(function () {
+		self.postMessage('success');
+	});
 };
 
 function empty() {}

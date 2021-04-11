@@ -2,11 +2,11 @@
 import 'core-js/stable';
 import searching from './searching';
 
-self.onmessage = async function (e) {
+self.onmessage = function (e) {
 	const { searh, name, version } = e.data;
-	const result = await searching(searh, name, version);
-
-	self.postMessage(result);
+	searching(searh, name, version).then(function (result) {
+		self.postMessage(result);
+	});
 };
 
 function empty() {}
