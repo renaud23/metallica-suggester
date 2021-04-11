@@ -5,7 +5,7 @@ function DefaultOptionRenderer({ option, selected }) {
 	const { id, label } = option;
 	return (
 		<div
-			classNames={classnames('lunatic-suggester-default-option', { selected })}
+			className={classnames('lunatic-suggester-default-option', { selected })}
 		>
 			{label || id}
 		</div>
