@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import append from './append';
 
 self.onmessage = function (e) {

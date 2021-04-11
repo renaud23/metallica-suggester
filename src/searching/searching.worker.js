@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import searching from './searching';
 
 self.onmessage = function (e) {
