@@ -22,9 +22,7 @@ module.exports = {
 			{
 				test: /\.worker\.(c|m)?js$/i,
 				loader: 'worker-loader',
-				options: {
-					inline: 'no-fallback',
-				},
+				options: {},
 			},
 			{
 				test: /\.s[ac]ss$/i,
