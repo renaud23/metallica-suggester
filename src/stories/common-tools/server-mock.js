@@ -78,6 +78,7 @@ function createResolver(path) {
 
 function mock(path, fetchData) {
 	let data;
+	console.log({ env: process.env });
 	fetchData(process.env.BASE_PATH || '').then(function (d) {
 		data = d;
 	});
