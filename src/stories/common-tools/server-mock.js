@@ -78,8 +78,9 @@ function createResolver(path) {
 
 function mock(path, fetchData) {
 	let data;
-	console.log({ env: process.env });
-	fetchData(process.env.BASE_PATH || '/metallica-suggester').then(function (d) {
+	const base_path = process.env.BASE_PATH || '';
+	console.log({ env: process.env }, base_path);
+	fetchData(base_path).then(function (d) {
 		data = d;
 	});
 
