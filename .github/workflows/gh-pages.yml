@@ -12,10 +12,6 @@ jobs:
       - name: Generate storybook
         run: |
           npm ci
-<<<<<<< HEAD
-=======
-          REACT_APP_BASE_PATH="/metallica-suggester"
->>>>>>> 74f6d68 (test)
           npm run build-storybook
       - name: Init new repo in dist folder and commit generated files
         run: |
