@@ -16,7 +16,7 @@ import fetchNafRev2 from './common-tools/fetch-naf-rev2';
 import './custom-themes.scss';
 
 const STORES = [
-	{ ...storeCog, href: 'https://test/cog/communes?page=1&size=1000' },
+	{ ...storeCog, href: 'https://test/cog/communes?page=1&size=1500' },
 	{ ...storeNaf, href: 'https://test/naf-rev2?page=1&size=500' },
 ];
 
