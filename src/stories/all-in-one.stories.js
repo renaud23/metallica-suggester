@@ -16,8 +16,8 @@ import fetchNafRev2 from './common-tools/fetch-naf-rev2';
 import './custom-themes.scss';
 
 const STORES = [
-	{ ...storeCog, href: 'https://test/cog/communes?page=1&size=1500' },
-	{ ...storeNaf, href: 'https://test/naf-rev2?page=1&size=500' },
+	{ ...storeCog, href: '/cog/communes?page=1&size=2000' },
+	{ ...storeNaf, href: '/naf-rev2?page=1&size=500' },
 ];
 
 const { name: storeCogName } = storeCog;
@@ -119,8 +119,8 @@ const story = {
 	component: Suggester,
 	parameters: {
 		msw: [
-			serverMock('https://test/cog/communes', fetchCOG),
-			serverMock('https://test/naf-rev2', fetchNafRev2),
+			serverMock('/cog/communes', fetchCOG),
+			serverMock('/naf-rev2', fetchNafRev2),
 		],
 	},
 };
