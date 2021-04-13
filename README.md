@@ -5,7 +5,7 @@ Les données sont stockés dans une base indexedDB spécifique à chaque suggest
 contenu des bases :
 - store/entities : le store qui contient toute les entités proposées à la suggestion. Chaque entrée du store contient un objet de type : { id: string|number, suggestion: object, tokens: [string] }. id est l'identifiant de l'objet suggestion, entité proposé par l'utilisateur de la librairie. tokens est une liste de chaîne de caractères servant à constituer l'index recherche. Cette liste est crée selon les instruction fournit par l'utilisateur, lors de la création du store.
 - store/info : contient un seul objet contenant les information utile à la création, l'indexation et durant les recherches des utilisateurs finaux.
-Il contient seulement une seule entrée :
+Il contient seulement une seule entrée  :
 {
     name:string,
     display:string|undefined,
