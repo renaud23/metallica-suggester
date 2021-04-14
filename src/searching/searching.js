@@ -24,8 +24,7 @@ function isValideSearch(search) {
 	return false;
 }
 
-async function searching(search, name, version) {
-	const max = 30;
+async function searching(search, name, version, max = 30) {
 	try {
 		if (isValideSearch(search)) {
 			const db = await getDb(name, version);
@@ -40,7 +39,7 @@ async function searching(search, name, version) {
 			const tokensSuggestions = await searchTokens(tokens, index);
 			const resultat = computeScore(tokensSuggestions);
 			if (max && max < resultat.length) {
-				return prepare(resultat.slice(0, max));
+				return { results: prepare(resultat.slice(0, max)), search };
 			}
 			return { results: prepare(resultat), search };
 		}

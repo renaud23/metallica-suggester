@@ -22,6 +22,7 @@ function LunaticSuggester({
 	onChange,
 	searching,
 	labelRenderer,
+	max,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search, selectedIndex, options } = state;
@@ -29,13 +30,13 @@ function LunaticSuggester({
 	useEffect(
 		function () {
 			async function doIt() {
-				const { results, search: old } = await searching(search);
+				const { results, search: old } = await searching(search, max);
 				dispatch(actions.onUpdateOptions(results, old));
 				onChange(results, old);
 			}
 			doIt();
 		},
-		[search, onChange, searching]
+		[search, onChange, searching, max]
 	);
 
 	useEffect(
@@ -78,10 +79,12 @@ LunaticSuggester.propTypes = {
 	labelRenderer: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
+	max: PropTypes.number,
 };
 
 LunaticSuggester.defaultProps = {
 	id: undefined,
+	max: 30,
 	className: undefined,
 	labelledBy: undefined,
 	placeholder: 'Veuillez...',

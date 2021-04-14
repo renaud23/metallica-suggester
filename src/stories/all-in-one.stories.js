@@ -96,6 +96,7 @@ export function AllInOne() {
 						labelRenderer={CustomLabelCog}
 						onChange={(...args) => console.log(args)}
 						onSelect={(...args) => console.log(args)}
+						max={5}
 					/>
 					<div>NAF-REV2 :</div>
 					<Suggester
