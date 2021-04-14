@@ -15,8 +15,9 @@ async function resolve(db, name) {
 			case 'tokenized':
 				PARSERS[name] = queryParserTokenized;
 				const { params } = queryParser;
-				const { language, pattern } = params;
-				return (query) => queryParserTokenized(query, language, pattern);
+				const { language, pattern, min } = params;
+				return (query) =>
+					queryParserTokenized(query, { language, pattern, min });
 			case 'soft':
 				PARSERS[name] = queryParserSoft;
 				return queryParserSoft;
