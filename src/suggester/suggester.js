@@ -9,6 +9,7 @@ import {
 import { Suggester } from './components';
 import DefaultLabelRenderer from './components/selection/defaul-label-renderer';
 import { DefaultOptionRenderer } from './components';
+import './default-style.scss';
 
 function LunaticSuggester({
 	id,
@@ -22,6 +23,7 @@ function LunaticSuggester({
 	onChange,
 	searching,
 	labelRenderer,
+	max,
 }) {
 	const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 	const { search, selectedIndex, options } = state;
@@ -29,13 +31,13 @@ function LunaticSuggester({
 	useEffect(
 		function () {
 			async function doIt() {
-				const { results, search: old } = await searching(search);
+				const { results, search: old } = await searching(search, max);
 				dispatch(actions.onUpdateOptions(results, old));
 				onChange(results, old);
 			}
 			doIt();
 		},
-		[search, onChange, searching]
+		[search, onChange, searching, max]
 	);
 
 	useEffect(
@@ -78,11 +80,13 @@ LunaticSuggester.propTypes = {
 	labelRenderer: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
+	max: PropTypes.number,
 };
 
 LunaticSuggester.defaultProps = {
 	id: undefined,
-	className: undefined,
+	max: 30,
+	className: 'lunatic-suggester-default-style',
 	labelledBy: undefined,
 	placeholder: 'Veuillez...',
 	optionRenderer: DefaultOptionRenderer,

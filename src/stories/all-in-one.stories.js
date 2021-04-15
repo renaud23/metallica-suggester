@@ -16,7 +16,7 @@ import fetchNafRev2 from './common-tools/fetch-naf-rev2';
 import './custom-themes.scss';
 
 const STORES = [
-	{ ...storeCog, href: '/cog/communes?page=1&size=1000' },
+	{ ...storeCog, href: '/cog/communes?page=1&size=2000' },
 	{ ...storeNaf, href: '/naf-rev2?page=1&size=500' },
 ];
 
@@ -89,13 +89,13 @@ export function AllInOne() {
 					<Suggester
 						id="suggest-communes"
 						labelledBy="label-suggester-cog"
-						className="custom-theme"
 						storeName={storeCogName}
 						version="1"
 						optionRenderer={OptionCogRenderer}
 						labelRenderer={CustomLabelCog}
 						onChange={(...args) => console.log(args)}
 						onSelect={(...args) => console.log(args)}
+						max={5}
 					/>
 					<div>NAF-REV2 :</div>
 					<Suggester

@@ -1,14 +1,27 @@
 import tokenizer from 'string-tokenizer';
-import { filterStemmer, filterLength } from '../commons-tokenizer';
+import removeAccents from 'remove-accents';
+import {
+	filterStemmer,
+	filterLength,
+	filterDouble,
+} from '../commons-tokenizer';
 
 function toArray(tokens) {
 	return Array.isArray(tokens) ? tokens : [tokens];
 }
 
-function parser(query, language = 'English', reg = /[\w]+/) {
-	const pattern = { tokens: reg };
-	const { tokens } = tokenizer().input(query).tokens(pattern).resolve();
-	return filterStemmer(filterLength(toArray(tokens)), language);
+function parser(
+	query = '',
+	{ language = 'French', pattern = /[\w]+/, min = 2 } = {}
+) {
+	const patternForTokens = { tokens: pattern };
+	const { tokens } = tokenizer()
+		.input(removeAccents(query).toLowerCase())
+		.tokens(patternForTokens)
+		.resolve();
+	return filterDouble(
+		filterStemmer(filterLength(toArray(tokens), min), language)
+	);
 }
 
 export default parser;

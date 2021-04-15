@@ -4,9 +4,9 @@ import Suggester from '../suggester';
 import { searching } from '../searching';
 import CheckStore from './check-store';
 
-function createSearching(storeName, version, language) {
-	return async function (search) {
-		return searching(search, storeName, version, language);
+function createSearching(storeName, version) {
+	return async function (search, max) {
+		return searching(search, storeName, version, max);
 	};
 }
 
@@ -20,6 +20,7 @@ function SuggesterIDB({
 	labelRenderer,
 	onSelect,
 	onChange,
+	max,
 }) {
 	const [store, setStore] = useState(undefined);
 	const cally = useMemo(
@@ -43,6 +44,7 @@ function SuggesterIDB({
 				onSelect={onSelect}
 				onChange={onChange}
 				searching={cally}
+				max={max}
 			/>
 		</CheckStore>
 	);
@@ -58,6 +60,7 @@ SuggesterIDB.propTypes = {
 	labelRenderer: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
+	max: PropTypes.number,
 };
 
 export default SuggesterIDB;

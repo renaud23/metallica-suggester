@@ -2,7 +2,7 @@ import Snowball from 'snowball';
 
 const STEMMERS = {};
 
-function getStemmer(language = 'English') {
+function getStemmer(language = 'French') {
 	if (!(language in STEMMERS)) {
 		const stemmer = new Snowball(language);
 		STEMMERS[language] = function (token) {

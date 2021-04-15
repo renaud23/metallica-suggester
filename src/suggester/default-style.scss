@@ -1,5 +1,11 @@
 @mixin fontFamilyInput() {
 	font-family: “Playfair Display”, “Didot”, 'Times New Roman', Times, serif;
+	font-size: 18px;
+	color: brown;
+}
+
+@mixin selection() {
+	@include fontFamilyInput();
 }
 
 @mixin placeholder {
@@ -11,27 +17,29 @@
 	font-weight: normal;
 }
 
-.custom-theme {
+.lunatic-suggester-default-style {
 	&.lunatic-suggester {
 		min-height: 30px;
 		width: 650px;
 		.lunatic-suggester-container {
 			/* */
-			border-radius: 5px;
-			border: solid 1px gray;
 
 			&.focused {
-				box-shadow: 0 2px 2px grey;
+				.lunatic-suggester-selection {
+				}
 			}
-			background-color: snow;
+
 			/* */
 			.lunatic-suggester-selection {
-				@include fontFamilyInput();
+				border-radius: 5px;
+				border: solid 1px gray;
+				background-color: snow;
 
 				.lunatic-suggester-input {
 					height: 30px;
 					line-height: 30px;
 					font-size: 15px;
+					@include selection();
 
 					&::placeholder {
 						@include placeholder();
@@ -41,12 +49,12 @@
 				.lunatic-suggester-selected {
 					height: 30px;
 					line-height: 30px;
-					border-radius: 5px;
 					background-color: snow;
+					border-radius: 5px;
+					@include selection();
 
 					.placeholder {
 						display: block;
-
 						@include placeholder();
 					}
 					.selection {
@@ -60,10 +68,17 @@
 			.lunatic-suggester-panel {
 				height: 0;
 				opacity: 0;
-				&.focused {
+				padding: 0;
+				background-color: snow;
+				transition: opacity 267ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+					transform 178ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+				&.expended {
 					opacity: 1;
+					min-height: 30px;
 					height: max-content;
-					overflow-y: scroll;
+					box-shadow: 0 2px 2px grey;
+					padding: 4px 4px;
+					border-radius: 4px;
 				}
 			}
 		}

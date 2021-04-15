@@ -10,21 +10,21 @@ export function isWorkerCompatible() {
 	return false;
 }
 
-function create(searh, name, version) {
+function create(searh, name, version, max) {
 	if (isWorkerCompatible()) {
 		return new Promise(function (resolve) {
 			if (WORKER) {
 				WORKER.terminate();
 			}
 			WORKER = new CreateSearchWorker();
-			WORKER.postMessage({ searh, name, version });
+			WORKER.postMessage({ searh, name, version, max });
 			WORKER.addEventListener('message', function (e) {
 				const { data } = e;
 				resolve(data);
 			});
 		});
 	} else {
-		return Promise.resolve(searching(searh, name, version));
+		return Promise.resolve(searching(searh, name, version, max));
 	}
 }
 

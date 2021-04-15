@@ -1,13 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
 
-function PanelContainer({ children, focused, id }) {
+function PanelContainer({ children, focused, expended, id }) {
 	return (
 		<ul
 			id={id}
 			tabIndex="-1"
 			className={classnames('lunatic-suggester-panel', {
 				focused,
+				expended,
 			})}
 			role="listbox"
 		>

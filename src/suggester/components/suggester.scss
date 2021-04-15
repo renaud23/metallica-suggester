@@ -19,7 +19,6 @@
 	.lunatic-suggester-container {
 		position: absolute;
 		width: 100%;
-		overflow: hidden;
 
 		.lunatic-suggester-selection {
 			position: relative;
@@ -72,7 +71,6 @@
 			}
 			.lunatic-suggester-option {
 				white-space: nowrap;
-				overflow-y: hidden;
 				@include preventSelect();
 			}
 		}

@@ -4,8 +4,8 @@ import 'regenerator-runtime/runtime';
 import searching from './searching';
 
 self.onmessage = function (e) {
-	const { searh, name, version } = e.data;
-	searching(searh, name, version).then(function (result) {
+	const { searh, name, version, max } = e.data;
+	searching(searh, name, version, max).then(function (result) {
 		self.postMessage(result);
 	});
 };
