@@ -25,7 +25,7 @@ function Panel({ optionRenderer: OptionRender }) {
 	const content = getContent(options, OptionRender, selectedIndex, expended);
 
 	return (
-		<PanelContainer focused={focused} id={`${id}-list`}>
+		<PanelContainer expended={expended} focused={focused} id={`${id}-list`}>
 			{content}
 		</PanelContainer>
 	);

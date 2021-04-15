@@ -9,6 +9,7 @@ import {
 import { Suggester } from './components';
 import DefaultLabelRenderer from './components/selection/defaul-label-renderer';
 import { DefaultOptionRenderer } from './components';
+import './default-style.scss';
 
 function LunaticSuggester({
 	id,
@@ -85,7 +86,7 @@ LunaticSuggester.propTypes = {
 LunaticSuggester.defaultProps = {
 	id: undefined,
 	max: 30,
-	className: undefined,
+	className: 'lunatic-suggester-default-style',
 	labelledBy: undefined,
 	placeholder: 'Veuillez...',
 	optionRenderer: DefaultOptionRenderer,

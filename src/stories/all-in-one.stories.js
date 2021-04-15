@@ -89,7 +89,6 @@ export function AllInOne() {
 					<Suggester
 						id="suggest-communes"
 						labelledBy="label-suggester-cog"
-						className="custom-theme"
 						storeName={storeCogName}
 						version="1"
 						optionRenderer={OptionCogRenderer}
