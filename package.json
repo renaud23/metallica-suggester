@@ -22,7 +22,7 @@
 		"regenerator-runtime": "^0.13.7",
 		"remove-accents": "^0.4.2",
 		"snowball": "^0.3.1",
-		"string-tokenizer": "^0.0.8",
+		"string-tokenizer": "^0.0.6",
 		"web-vitals": "^1.0.1"
 	},
 	"scripts": {
@@ -51,7 +51,7 @@
 		]
 	},
 	"devDependencies": {
-		"@material-ui/core": "^4.11.3",
+		"@material-ui/core": "^4.11.2",
 		"@material-ui/icons": "^4.11.2",
 		"@storybook/addon-actions": "^6.2.3",
 		"@storybook/addon-essentials": "^6.2.3",
