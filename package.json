@@ -75,7 +75,7 @@
 		"fs": "^0.0.1-security",
 		"msw": "^0.28.0",
 		"msw-storybook-addon": "^1.1.0",
-		"node-sass": "^5.0.0",
+		"node-sass": "4",
 		"object-sizeof": "^1.6.1",
 		"parse-url": "^5.0.2",
 		"prettier": "^2.2.1",
