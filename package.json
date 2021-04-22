@@ -22,7 +22,7 @@
 		"regenerator-runtime": "^0.13.7",
 		"remove-accents": "^0.4.2",
 		"snowball": "^0.3.1",
-		"string-tokenizer": "^0.0.8",
+		"string-tokenizer": "^0.0.6",
 		"web-vitals": "^1.0.1"
 	},
 	"scripts": {
