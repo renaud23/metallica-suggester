@@ -15,9 +15,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
+      - run: yarn install
+      - run: yarn build
+      - run: yarn test
 
   publish-npm:
     needs: build-and-test
