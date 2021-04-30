@@ -15,15 +15,14 @@ import fetchCOG from './common-tools/fetch-cog';
 import fetchNafRev2 from './common-tools/fetch-naf-rev2';
 import './custom-themes.scss';
 
+const BASE_PATH = process.env.BASE_PATH || '';
 const STORES = [
-	{ ...storeCog, href: '/cog/communes?page=1&size=2000' },
-	{ ...storeNaf, href: '/naf-rev2?page=1&size=500' },
+	{ ...storeCog, href: `${BASE_PATH}/cog/communes?page=1&size=2000` },
+	{ ...storeNaf, href: `${BASE_PATH}/naf-rev2?page=1&size=500` },
 ];
 
 const { name: storeCogName } = storeCog;
 const { name: storeNafName } = storeNaf;
-
-const BASE_PATH = process.env.BASE_PATH || '';
 
 function useCreateStores(stores = []) {
 	const [dbs, setDbs] = useState(undefined);

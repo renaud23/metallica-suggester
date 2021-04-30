@@ -7,8 +7,8 @@ import { storeCog, Loader } from './common-tools';
 import { useStoreIndex } from '../store-index';
 
 const { name } = storeCog;
-const STORE = { ...storeCog, href: '/cog/communes' };
 const BASE_PATH = process.env.BASE_PATH || '';
+const STORE = { ...storeCog, href: `${BASE_PATH}/cog/communes` };
 
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);

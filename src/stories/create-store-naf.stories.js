@@ -7,8 +7,8 @@ import { storeNaf, Loader } from './common-tools';
 import { useStoreIndex } from '../store-index';
 
 const { name } = storeNaf;
-const STORE = { ...storeNaf, version: '1', href: '/naf-rev2' };
 const BASE_PATH = process.env.BASE_PATH || '';
+const STORE = { ...storeNaf, version: '1', href: `${BASE_PATH}/naf-rev2` };
 
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
