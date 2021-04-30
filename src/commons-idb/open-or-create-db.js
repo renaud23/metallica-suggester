@@ -1,10 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import CONSTANTE from './constantes';
-function getIDB() {
-	return indexedDB;
-	// const what = self || window;
-	// return what.indexedDB || what.mozIndexedDB || what.webkitIndexedDB || what.msIndexedDB;
-}
+import getIDB from './get-idb';
 
 const IDB_REF = getIDB();
 
