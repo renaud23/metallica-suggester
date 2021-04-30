@@ -23,6 +23,8 @@ const STORES = [
 const { name: storeCogName } = storeCog;
 const { name: storeNafName } = storeNaf;
 
+const BASE_PATH = process.env.BASE_PATH || '';
+
 function useCreateStores(stores = []) {
 	const [dbs, setDbs] = useState(undefined);
 
@@ -119,8 +121,8 @@ const story = {
 	component: Suggester,
 	parameters: {
 		msw: [
-			serverMock('/cog/communes', fetchCOG),
-			serverMock('/naf-rev2', fetchNafRev2),
+			serverMock(`${BASE_PATH}/cog/communes`, fetchCOG),
+			serverMock(`${BASE_PATH}/naf-rev2`, fetchNafRev2),
 		],
 	},
 };
