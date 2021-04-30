@@ -8,6 +8,7 @@ import { useStoreIndex } from '../store-index';
 
 const { name } = storeNaf;
 const STORE = { ...storeNaf, version: '1', href: '/naf-rev2' };
+const BASE_PATH = process.env.BASE_PATH || '';
 
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
@@ -44,7 +45,7 @@ const story = {
 	title: 'store-index/naf',
 	component: () => null,
 	parameters: {
-		msw: [serverMock('/naf-rev2', fetchNafRev2)],
+		msw: [serverMock(`${BASE_PATH}/naf-rev2`, fetchNafRev2)],
 	},
 };
 

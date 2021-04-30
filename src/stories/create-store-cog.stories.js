@@ -8,6 +8,7 @@ import { useStoreIndex } from '../store-index';
 
 const { name } = storeCog;
 const STORE = { ...storeCog, href: '/cog/communes' };
+const BASE_PATH = process.env.BASE_PATH || '';
 
 export function CreateFillStoreCog() {
 	const [disabled, setDisabled] = useState(true);
@@ -44,7 +45,7 @@ const story = {
 	title: 'store-index/cog',
 	component: () => null,
 	parameters: {
-		msw: [serverMock('/cog/communes', fetchCOG)],
+		msw: [serverMock(`${BASE_PATH}/cog/communes`, fetchCOG)],
 	},
 };
 
