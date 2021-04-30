@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-function getIDB() {
+function getIDB(): IDBFactory {
 	return indexedDB;
 	// const what = self || window;
 	// return what.indexedDB || what.mozIndexedDB || what.webkitIndexedDB || what.msIndexedDB;

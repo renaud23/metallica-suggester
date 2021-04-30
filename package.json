@@ -1,16 +1,15 @@
 {
 	"name": "lunatic-suggester",
-	"version": "v0.1.6",
+	"version": "v0.1.7",
 	"license": "MIT",
 	"author": "renaud.genevois",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/renaud23/metallica-suggester"
 	},
-	"main": "./release/index.js",
+	"main": "./index.js",
 	"files": [
-		"src",
-		"release"
+		"src"
 	],
 	"dependencies": {
 		"classnames": "^2.2.6",
@@ -22,7 +21,7 @@
 		"regenerator-runtime": "^0.13.7",
 		"remove-accents": "^0.4.2",
 		"snowball": "^0.3.1",
-		"string-tokenizer": "^0.0.6",
+		"string-tokenizer": "^0.0.8",
 		"web-vitals": "^1.0.1"
 	},
 	"scripts": {
